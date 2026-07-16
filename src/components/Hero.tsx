@@ -11,7 +11,7 @@ const steps = [
   {
     emoji: "🍵",
     title: "Get matched instantly",
-    body: "No sign-up, no database — just a routine generated on the spot.",
+    body: "No sign-up — just a routine generated on the spot.",
   },
   {
     emoji: "🌤️",
@@ -34,7 +34,7 @@ export default function Hero({ onStart }: HeroProps) {
 
       <div className="relative mx-auto max-w-3xl text-center">
         <p className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-secondary">
-          <span aria-hidden="true">🌱</span> No account. No database. Just tea.
+          <span aria-hidden="true">🌱</span> No account. Just tea.
         </p>
         <h1 className="mt-6 font-display text-4xl font-semibold leading-tight text-text sm:text-5xl lg:text-6xl">
           Find your perfect{" "}
@@ -52,7 +52,7 @@ export default function Hero({ onStart }: HeroProps) {
           >
             Start the Quiz
           </button>
-          <span className="text-sm text-text/50">Takes about a minute</span>
+          <span className="text-sm text-text/50">Takes less than 30 seconds</span>
         </div>
       </div>
 
