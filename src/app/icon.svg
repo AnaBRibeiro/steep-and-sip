@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="22" fill="#15803D"/>
+  <path
+    d="M50 18 C 68 26, 80 46, 66 66 C 58 77, 50 82, 50 82 C 50 82, 42 77, 34 66 C 20 46, 32 26, 50 18 Z"
+    fill="#F0FDF4"
+  />
+  <path
+    d="M50 28 C 50 45, 50 62, 50 78"
+    stroke="#166534"
+    stroke-width="3"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <path
+    d="M50 40 C 44 44, 40 47, 37 49 M50 40 C 56 44, 60 47, 63 49 M50 54 C 45 58, 41 60, 38 62 M50 54 C 55 58, 59 60, 62 62"
+    stroke="#166534"
+    stroke-width="2"
+    stroke-linecap="round"
+    fill="none"
+  />
+</svg>
