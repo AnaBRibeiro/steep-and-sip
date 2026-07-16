@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { questions } from "@/lib/quiz";
+import { useFadeNavigate } from "@/lib/useFadeNavigate";
 import { QuizAnswers } from "@/lib/types";
 
 type PartialAnswers = Partial<Record<keyof QuizAnswers, string>>;
@@ -12,7 +13,7 @@ interface QuizFlowProps {
 }
 
 export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
-  const [stepIndex, setStepIndex] = useState(0);
+  const { value: stepIndex, visible, navigate: navigateStep } = useFadeNavigate(0);
   const [answers, setAnswers] = useState<PartialAnswers>({});
   const groupName = useId();
 
@@ -30,7 +31,7 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
     if (isLast) {
       onComplete(answers as QuizAnswers);
     } else {
-      setStepIndex((i) => i + 1);
+      navigateStep(stepIndex + 1);
     }
   }
 
@@ -38,7 +39,7 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
     if (stepIndex === 0) {
       onCancel();
     } else {
-      setStepIndex((i) => i - 1);
+      navigateStep(stepIndex - 1);
     }
   }
 
@@ -62,6 +63,7 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
       </p>
 
       <form
+        className={`page-transition ${visible ? "is-visible" : "is-hidden"}`}
         onSubmit={(e) => {
           e.preventDefault();
           handleNext();
