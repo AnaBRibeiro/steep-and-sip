@@ -32,9 +32,12 @@ export default function ResultsView({ answers, onRetake, onStartOver }: ResultsV
         </h1>
       </div>
 
-      <div className="mt-10 rounded-3xl border border-primary/15 bg-surface p-6 shadow-sm sm:p-8">
+      <div className="entrance mt-10 rounded-3xl border border-primary/15 bg-surface p-6 shadow-sm sm:p-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-4xl">
+          <div
+            style={{ animationDelay: "120ms" }}
+            className="entrance flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-4xl"
+          >
             <span aria-hidden="true">{primary.emoji}</span>
           </div>
           <div>
@@ -73,12 +76,13 @@ export default function ResultsView({ answers, onRetake, onStartOver }: ResultsV
         Your full-day routine
       </h3>
       <div className="mt-6 grid gap-5 sm:grid-cols-3">
-        {routine.map(({ time, tea }) => {
+        {routine.map(({ time, tea }, index) => {
           const isCurrent = time === answers.time;
           return (
             <div
               key={time}
-              className={`rounded-2xl border-2 p-5 ${
+              style={{ animationDelay: `${index * 100}ms` }}
+              className={`entrance rounded-2xl border-2 p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
                 isCurrent ? "border-primary bg-primary/5" : "border-primary/10 bg-surface"
               }`}
             >
@@ -105,14 +109,14 @@ export default function ResultsView({ answers, onRetake, onStartOver }: ResultsV
         <button
           type="button"
           onClick={onRetake}
-          className="w-full rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-secondary sm:w-auto"
+          className="w-full rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-md sm:w-auto"
         >
           Retake the Quiz
         </button>
         <button
           type="button"
           onClick={onStartOver}
-          className="w-full rounded-full border-2 border-primary/20 px-8 py-3 text-sm font-semibold text-text/70 transition-colors hover:border-primary/40 sm:w-auto"
+          className="w-full rounded-full border-2 border-primary/20 px-8 py-3 text-sm font-semibold text-text/70 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 sm:w-auto"
         >
           Back to Home
         </button>

@@ -9,10 +9,13 @@ export default function Header({ onLogoClick }: HeaderProps) {
         <button
           type="button"
           onClick={onLogoClick}
-          className="flex items-center gap-2 rounded-md text-left"
+          className="group flex items-center gap-2 rounded-md text-left"
           aria-label="Steep & Sip home"
         >
-          <span className="text-2xl" aria-hidden="true">
+          <span
+            className="inline-block text-2xl transition-transform duration-200 group-hover:-rotate-12 group-hover:scale-110"
+            aria-hidden="true"
+          >
             🍃
           </span>
           <span className="font-display text-xl font-semibold text-secondary sm:text-2xl">

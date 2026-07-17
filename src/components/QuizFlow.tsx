@@ -83,7 +83,7 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
                 <label
                   key={option.value}
                   htmlFor={inputId}
-                  className={`flex cursor-pointer items-start gap-3 rounded-xl border-2 bg-surface p-4 transition-colors has-[:checked]:border-primary has-[:checked]:bg-primary/10 has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-accent ${
+                  className={`flex cursor-pointer items-start gap-3 rounded-xl border-2 bg-surface p-4 transition-all duration-200 has-[:checked]:scale-[1.02] has-[:checked]:border-primary has-[:checked]:bg-primary/10 has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-accent hover:-translate-y-0.5 hover:shadow-sm ${
                     isChecked ? "border-primary" : "border-primary/15 hover:border-primary/40"
                   }`}
                 >
@@ -120,7 +120,7 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
           <button
             type="submit"
             disabled={!selected}
-            className="rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-primary"
+            className="rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-md disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isLast ? "Get My Tea Routine" : "Next"}
           </button>

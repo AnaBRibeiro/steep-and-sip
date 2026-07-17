@@ -1,3 +1,7 @@
+"use client";
+
+import { useInView } from "@/lib/useInView";
+
 interface HeroProps {
   onStart: () => void;
 }
@@ -21,15 +25,17 @@ const steps = [
 ];
 
 export default function Hero({ onStart }: HeroProps) {
+  const { ref: stepsRef, state: revealState } = useInView<HTMLDivElement>();
+
   return (
     <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
+        className="animate-float pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-accent/10 blur-3xl"
+        className="animate-float-slow pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-accent/10 blur-3xl"
       />
 
       <div className="relative mx-auto max-w-3xl text-center">
@@ -48,7 +54,7 @@ export default function Hero({ onStart }: HeroProps) {
           <button
             type="button"
             onClick={onStart}
-            className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-secondary focus-visible:outline-3 focus-visible:outline-accent sm:w-auto"
+            className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-md active:translate-y-0 focus-visible:outline-3 focus-visible:outline-accent sm:w-auto"
           >
             Start the Quiz
           </button>
@@ -56,11 +62,14 @@ export default function Hero({ onStart }: HeroProps) {
         </div>
       </div>
 
-      <div className="relative mx-auto mt-16 grid max-w-4xl gap-6 sm:grid-cols-3">
-        {steps.map((step) => (
+      <div ref={stepsRef} className="relative mx-auto mt-16 grid max-w-4xl gap-6 sm:grid-cols-3">
+        {steps.map((step, index) => (
           <div
             key={step.title}
-            className="rounded-2xl border border-primary/10 bg-surface/70 p-6 text-center shadow-sm"
+            style={{ animationDelay: `${index * 120}ms` }}
+            className={`entrance-on-scroll rounded-2xl border border-primary/10 bg-surface/70 p-6 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
+              revealState !== "idle" ? revealState : ""
+            }`}
           >
             <span className="text-3xl" aria-hidden="true">
               {step.emoji}
