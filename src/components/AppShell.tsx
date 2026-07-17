@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ClosingCta from "./ClosingCta";
 import Header from "./Header";
 import Footer from "./Footer";
 import Hero from "./Hero";
@@ -33,6 +34,7 @@ export default function AppShell() {
           <>
             <Hero onStart={() => navigate("quiz")} />
             <Testimonials />
+            <ClosingCta onStart={() => navigate("quiz")} />
           </>
         )}
         {view === "quiz" && <QuizFlow onComplete={handleComplete} onCancel={goHome} />}
