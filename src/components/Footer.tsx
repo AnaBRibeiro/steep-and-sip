@@ -7,7 +7,8 @@ export default function Footer() {
           Grown from good habits, brewed one cup at a time.
         </p>
         <p className="mt-4 text-xs text-text/40">
-          &copy; {new Date().getFullYear()} Steep &amp; Sip. For wellness inspiration only — not medical advice.
+          &copy; {new Date().getFullYear()}{" "}
+          Steep &amp; Sip. For wellness inspiration only — not medical advice.
         </p>
       </div>
     </footer>

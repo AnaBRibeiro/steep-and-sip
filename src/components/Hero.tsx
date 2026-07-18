@@ -56,7 +56,7 @@ export default function Hero({ onStart }: HeroProps) {
             onClick={onStart}
             className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-md active:translate-y-0 focus-visible:outline-3 focus-visible:outline-accent sm:w-auto"
           >
-            Start the Quiz
+            Take the Quiz
           </button>
           <span className="text-sm text-text/50">Takes less than 30 seconds</span>
         </div>
@@ -67,7 +67,7 @@ export default function Hero({ onStart }: HeroProps) {
           <div
             key={step.title}
             style={{ animationDelay: `${index * 120}ms` }}
-            className={`entrance-on-scroll rounded-2xl border border-primary/10 bg-surface/70 p-6 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
+            className={`entrance-on-scroll rounded-2xl border border-primary/10 bg-surface/70 p-6 text-center shadow-sm ${
               revealState !== "idle" ? revealState : ""
             }`}
           >

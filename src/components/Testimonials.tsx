@@ -50,7 +50,7 @@ export default function Testimonials() {
             <figure
               key={testimonial.name}
               style={{ animationDelay: `${index * 120}ms` }}
-              className={`entrance-on-scroll flex flex-col rounded-2xl border border-primary/10 bg-surface/70 p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
+              className={`entrance-on-scroll flex flex-col rounded-2xl border border-primary/10 bg-surface/70 p-6 shadow-sm ${
                 revealState !== "idle" ? revealState : ""
               }`}
             >
