@@ -13,7 +13,7 @@ export default function ClosingCta({ onStart }: ClosingCtaProps) {
     <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 -left-24 h-96 w-96 -translate-y-1/2 rounded-full bg-primary/25 blur-3xl"
+        className="pointer-events-none absolute top-1/2 -left-24 h-96 w-96 -translate-y-1/2 rounded-full bg-primary/15 blur-3xl"
       />
       <div
         ref={ref}
