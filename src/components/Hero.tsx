@@ -6,39 +6,6 @@ interface HeroProps {
   onStart: () => void;
 }
 
-function ClipboardIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
-      <rect x="6" y="4" width="12" height="16" rx="2" />
-      <path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1" strokeLinecap="round" />
-      <path d="M9 10h6M9 14h6M9 18h3" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function SparkleIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
-      <path
-        d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function SunIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
-      <circle cx="12" cy="12" r="4.5" />
-      <path
-        d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 function TeacupIllustration() {
   return (
     <svg
@@ -62,17 +29,17 @@ function TeacupIllustration() {
 
 const steps = [
   {
-    icon: <ClipboardIcon />,
+    emoji: "📝",
     title: "Quick Assessment",
     body: "Answer a few questions about your lifestyle. We value your time as much as your calm.",
   },
   {
-    icon: <SparkleIcon />,
+    emoji: "🍵",
     title: "Get matched instantly",
     body: "No sign-up — just a routine generated on the spot, for instant clarity in your daily brew.",
   },
   {
-    icon: <SunIcon />,
+    emoji: "🌤️",
     title: "Sip through your day",
     body: "Receive a full morning, afternoon, and evening routine tailored to your energy flow.",
   },
@@ -136,9 +103,9 @@ export default function Hero({ onStart }: HeroProps) {
                 revealState !== "idle" ? revealState : ""
               }`}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-pale text-primary">
-                {step.icon}
-              </div>
+              <span className="text-2xl" aria-hidden="true">
+                {step.emoji}
+              </span>
               <h3 className="mt-4 font-display text-lg font-semibold text-text">{step.title}</h3>
               <p className="mt-2 text-sm text-text-muted">{step.body}</p>
             </div>
