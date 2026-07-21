@@ -1,23 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --color-brand-primary: #15803d;
-  --color-brand-secondary: #166534;
-  --color-brand-accent: #a16207;
-  --color-brand-bg: #f0fdf4;
-  --color-brand-text: #14532d;
+  --color-brand-bg: #f9f7f2;
   --color-brand-surface: #ffffff;
+  --color-brand-surface-muted: #f6f3f2;
+  --color-brand-text: #2d2d2d;
+  --color-brand-text-muted: #5c5c5c;
+  --color-brand-primary: #4a654f;
+  --color-brand-primary-hover: #3a5140;
+  --color-brand-primary-pale: #e8eee9;
+  --color-brand-on-primary: #ffffff;
+  --color-brand-outline: #c2c8c0;
+  --color-brand-tertiary: #7b545a;
 }
 
 @theme inline {
-  --color-primary: var(--color-brand-primary);
-  --color-secondary: var(--color-brand-secondary);
-  --color-accent: var(--color-brand-accent);
   --color-bg: var(--color-brand-bg);
-  --color-text: var(--color-brand-text);
   --color-surface: var(--color-brand-surface);
-  --font-display: var(--font-fraunces);
-  --font-sans: var(--font-nunito);
+  --color-surface-muted: var(--color-brand-surface-muted);
+  --color-text: var(--color-brand-text);
+  --color-text-muted: var(--color-brand-text-muted);
+  --color-primary: var(--color-brand-primary);
+  --color-primary-hover: var(--color-brand-primary-hover);
+  --color-primary-pale: var(--color-brand-primary-pale);
+  --color-on-primary: var(--color-brand-on-primary);
+  --color-outline: var(--color-brand-outline);
+  --color-tertiary: var(--color-brand-tertiary);
+  --font-display: var(--font-playfair);
+  --font-sans: var(--font-inter);
 }
 
 body {
@@ -27,7 +37,7 @@ body {
 
 /* Visible focus ring for keyboard navigation, matching brand palette */
 :focus-visible {
-  outline: 3px solid var(--color-brand-accent);
+  outline: 3px solid var(--color-brand-primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -42,6 +52,11 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Low-opacity, sage-tinted shadow for hover states, per the "soft diffusion" elevation rule. */
+.shadow-ambient {
+  box-shadow: 0 10px 28px -10px rgba(74, 101, 79, 0.18);
 }
 
 .page-transition {

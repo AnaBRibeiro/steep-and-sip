@@ -46,7 +46,7 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
   return (
     <section className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
       <div
-        className="h-2 w-full overflow-hidden rounded-full bg-primary/10"
+        className="h-1 w-full overflow-hidden rounded-full bg-outline/40"
         role="progressbar"
         aria-valuenow={stepIndex + 1}
         aria-valuemin={1}
@@ -54,11 +54,11 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
         aria-label={`Question ${stepIndex + 1} of ${total}`}
       >
         <div
-          className="h-full rounded-full bg-primary transition-all duration-300"
+          className="h-full bg-primary transition-all duration-300"
           style={{ width: `${((stepIndex + 1) / total) * 100}%` }}
         />
       </div>
-      <p className="mt-3 text-sm font-medium text-text/50">
+      <p className="mt-3 text-sm font-medium text-text-muted">
         Step {stepIndex + 1} of {total}
       </p>
 
@@ -70,10 +70,10 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
         }}
       >
         <fieldset className="mt-4">
-          <legend className="font-display text-2xl font-semibold text-text sm:text-3xl">
+          <legend className="font-display text-2xl font-bold text-text sm:text-3xl">
             {question.question}
           </legend>
-          <p className="mt-2 text-text/60">{question.helper}</p>
+          <p className="mt-2 text-text-muted">{question.helper}</p>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {question.options.map((option) => {
@@ -83,8 +83,8 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
                 <label
                   key={option.value}
                   htmlFor={inputId}
-                  className={`flex cursor-pointer items-start gap-3 rounded-xl border-2 bg-surface p-4 transition-all duration-200 has-[:checked]:scale-[1.02] has-[:checked]:border-primary has-[:checked]:bg-primary/10 has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-accent hover:-translate-y-0.5 hover:shadow-sm ${
-                    isChecked ? "border-primary" : "border-primary/15 hover:border-primary/40"
+                  className={`flex cursor-pointer items-start gap-3 rounded-lg border bg-surface p-4 transition-colors duration-200 has-[:checked]:border-primary has-[:checked]:bg-primary-pale has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-primary ${
+                    isChecked ? "border-primary" : "border-outline hover:border-primary/50"
                   }`}
                 >
                   <input
@@ -101,7 +101,7 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
                   </span>
                   <span>
                     <span className="block font-semibold text-text">{option.label}</span>
-                    <span className="block text-sm text-text/60">{option.description}</span>
+                    <span className="block text-sm text-text-muted">{option.description}</span>
                   </span>
                 </label>
               );
@@ -113,14 +113,14 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
           <button
             type="button"
             onClick={handleBack}
-            className="rounded-full px-5 py-2.5 text-sm font-semibold text-text/60 transition-colors hover:text-text"
+            className="rounded-lg px-5 py-2.5 text-sm font-semibold text-text-muted transition-colors hover:text-text"
           >
             {stepIndex === 0 ? "Cancel" : "Back"}
           </button>
           <button
             type="submit"
             disabled={!selected}
-            className="rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-md disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-lg bg-primary px-8 py-3 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isLast ? "Get My Tea Routine" : "Next"}
           </button>

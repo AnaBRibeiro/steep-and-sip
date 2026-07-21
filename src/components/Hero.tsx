@@ -6,21 +6,75 @@ interface HeroProps {
   onStart: () => void;
 }
 
+function ClipboardIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
+      <rect x="6" y="4" width="12" height="16" rx="2" />
+      <path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1" strokeLinecap="round" />
+      <path d="M9 10h6M9 14h6M9 18h3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function SparkleIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
+      <path
+        d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function SunIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-5 w-5">
+      <circle cx="12" cy="12" r="4.5" />
+      <path
+        d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function TeacupIllustration() {
+  return (
+    <svg
+      viewBox="0 0 240 220"
+      className="h-auto w-full max-w-xs text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M95 55c0-8 8-8 8-16s-8-8-8-16" opacity="0.45" />
+      <path d="M120 55c0-8 8-8 8-16s-8-8-8-16" opacity="0.45" />
+      <path d="M145 55c0-8 8-8 8-16s-8-8-8-16" opacity="0.45" />
+      <path d="M60 90h120v28c0 28-27 50-60 50s-60-22-60-50z" />
+      <path d="M180 100c16 0 28 11 28 24s-12 24-28 24" />
+      <ellipse cx="120" cy="185" rx="78" ry="9" />
+    </svg>
+  );
+}
+
 const steps = [
   {
-    emoji: "📝",
-    title: "Answer 5 quick questions",
-    body: "Your goal, caffeine preference, timing, flavor, and ritual style.",
+    icon: <ClipboardIcon />,
+    title: "Quick Assessment",
+    body: "Answer a few questions about your lifestyle. We value your time as much as your calm.",
   },
   {
-    emoji: "🍵",
+    icon: <SparkleIcon />,
     title: "Get matched instantly",
-    body: "No sign-up — just a routine generated on the spot.",
+    body: "No sign-up — just a routine generated on the spot, for instant clarity in your daily brew.",
   },
   {
-    emoji: "🌤️",
+    icon: <SunIcon />,
     title: "Sip through your day",
-    body: "Receive a full morning, afternoon, and evening tea routine.",
+    body: "Receive a full morning, afternoon, and evening routine tailored to your energy flow.",
   },
 ];
 
@@ -28,59 +82,69 @@ export default function Hero({ onStart }: HeroProps) {
   const { ref: stepsRef, state: revealState } = useInView<HTMLDivElement>();
 
   return (
-    <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-      <div
-        aria-hidden="true"
-        className="animate-float pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="animate-float-slow pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-accent/10 blur-3xl"
-      />
-
-      <div className="relative mx-auto max-w-3xl text-center">
-        <p className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-secondary">
-          <span aria-hidden="true">🌱</span> No account. Just tea.
-        </p>
-        <h1 className="mt-6 font-display text-4xl font-semibold leading-tight text-text sm:text-5xl lg:text-6xl">
-          Find your perfect{" "}
-          <span className="italic text-primary">tea routine</span>
-        </h1>
-        <p className="mx-auto mt-5 max-w-xl text-lg text-text/70 sm:text-xl">
-          Answer a few questions about how you want to feel, and we&apos;ll steep
-          together a routine matched to your goals, taste, and time of day.
-        </p>
-        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <button
-            type="button"
-            onClick={onStart}
-            className="w-full rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-secondary hover:shadow-md active:translate-y-0 focus-visible:outline-3 focus-visible:outline-accent sm:w-auto"
-          >
-            Take the Quiz
-          </button>
-          <span className="text-sm text-text/50">Takes less than 30 seconds</span>
-        </div>
-      </div>
-
-      <div ref={stepsRef} className="relative mx-auto mt-16 grid max-w-4xl gap-6 sm:grid-cols-3">
-        {steps.map((step, index) => (
-          <div
-            key={step.title}
-            style={{ animationDelay: `${index * 120}ms` }}
-            className={`entrance-on-scroll rounded-2xl border border-primary/10 bg-surface/70 p-6 text-center shadow-sm ${
-              revealState !== "idle" ? revealState : ""
-            }`}
-          >
-            <span className="text-3xl" aria-hidden="true">
-              {step.emoji}
-            </span>
-            <h2 className="mt-3 font-display text-lg font-semibold text-secondary">
-              {step.title}
-            </h2>
-            <p className="mt-2 text-sm text-text/70">{step.body}</p>
+    <>
+      <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h1 className="font-display text-4xl leading-tight font-bold tracking-tight text-text sm:text-5xl">
+              Find your perfect <span className="italic">tea routine</span>, brewed in minutes
+            </h1>
+            <p className="mt-5 max-w-md text-lg text-text-muted">
+              Answer a few questions about how you want to feel, and we&apos;ll steep
+              together a routine matched to your goals, taste, and time of day.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-5">
+              <button
+                type="button"
+                onClick={onStart}
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 text-base font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover focus-visible:outline-3 focus-visible:outline-primary"
+              >
+                Take the Quiz
+                <span aria-hidden="true">→</span>
+              </button>
+              <div className="text-xs">
+                <p className="font-semibold tracking-wide text-text uppercase">No account. Just tea.</p>
+                <p className="mt-0.5 text-text-muted italic">Takes less than 30s</p>
+              </div>
+            </div>
           </div>
-        ))}
-      </div>
-    </section>
+
+          <div className="flex items-center justify-center rounded-xl bg-surface-muted p-10 sm:p-14">
+            <TeacupIllustration />
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">The Process</p>
+          <h2 className="mt-4 font-display text-2xl font-bold text-text sm:text-3xl">
+            Answer 5 quick questions
+          </h2>
+          <p className="mx-auto mt-3 max-w-lg text-text-muted">
+            Your goal, caffeine preference, timing, flavor, and ritual style — personalized for your
+            life.
+          </p>
+        </div>
+
+        <div ref={stepsRef} className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-3">
+          {steps.map((step, index) => (
+            <div
+              key={step.title}
+              style={{ animationDelay: `${index * 120}ms` }}
+              className={`entrance-on-scroll rounded-lg border border-outline bg-surface p-6 ${
+                revealState !== "idle" ? revealState : ""
+              }`}
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-pale text-primary">
+                {step.icon}
+              </div>
+              <h3 className="mt-4 font-display text-lg font-semibold text-text">{step.title}</h3>
+              <p className="mt-2 text-sm text-text-muted">{step.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }

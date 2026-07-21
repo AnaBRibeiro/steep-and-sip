@@ -18,7 +18,7 @@ export default function Header({ onLogoClick }: HeaderProps) {
           >
             🍃
           </span>
-          <span className="font-display text-xl font-semibold text-secondary sm:text-2xl">
+          <span className="font-display text-xl font-semibold text-primary sm:text-2xl">
             Steep &amp; Sip
           </span>
         </button>
