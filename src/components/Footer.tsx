@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+const companyLinks = [{ href: "/contact", label: "Contact" }];
+
 const legalLinks = [
   { href: "/terms-of-use", label: "Terms of Use" },
   { href: "/privacy-policy", label: "Privacy Policy" },
@@ -16,6 +18,19 @@ export default function Footer() {
             <p className="mt-2 max-w-xs text-sm text-text-muted">
               Grown from good habits, brewed one cup at a time.
             </p>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Company</p>
+            <ul className="mt-3 space-y-2 text-sm">
+              {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-text-muted transition-colors hover:text-primary">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>

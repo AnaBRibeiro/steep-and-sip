@@ -26,9 +26,14 @@ export default function Header({ onLogoClick }: HeaderProps) {
             Steep &amp; Sip
           </span>
         </Link>
-        <span className="hidden text-sm font-medium text-text/60 sm:block">
-          Your personal tea routine, brewed in minutes
-        </span>
+        <nav>
+          <Link
+            href="/contact"
+            className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
+          >
+            Contact
+          </Link>
+        </nav>
       </div>
     </header>
   );
