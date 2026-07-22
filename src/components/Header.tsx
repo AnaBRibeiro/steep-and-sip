@@ -1,12 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 
 interface HeaderProps {
   onLogoClick?: () => void;
 }
 
+const navLinks = [
+  { href: "/tea-guide", label: "Tea Guide" },
+  { href: "/tea-routine-pros-and-cons", label: "Pros & Cons" },
+  { href: "/history-of-tea", label: "History of Tea" },
+];
+
 export default function Header({ onLogoClick }: HeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="w-full border-b border-primary/10 bg-surface/80 backdrop-blur-sm sticky top-0 z-10">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -26,15 +35,56 @@ export default function Header({ onLogoClick }: HeaderProps) {
             Steep &amp; Sip
           </span>
         </Link>
-        <nav>
-          <Link
-            href="/contact"
-            className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
-          >
-            Contact
-          </Link>
+
+        <nav className="hidden items-center gap-6 sm:flex">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
+
+        <button
+          type="button"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          className="flex h-9 w-9 items-center justify-center rounded-md text-text transition-colors hover:text-primary sm:hidden"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            className="h-6 w-6"
+          >
+            {menuOpen ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+          </svg>
+        </button>
       </div>
+
+      {menuOpen && (
+        <nav className="border-t border-outline bg-surface px-4 py-4 sm:hidden">
+          <ul className="flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-md px-2 py-2.5 text-sm font-semibold text-text-muted transition-colors hover:bg-primary-pale hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }

@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-const companyLinks = [{ href: "/contact", label: "Contact" }];
+const exploreLinks = [
+  { href: "/tea-guide", label: "Tea Guide" },
+  { href: "/tea-routine-pros-and-cons", label: "Pros & Cons" },
+  { href: "/history-of-tea", label: "History of Tea" },
+];
+
+const contactLinks = [{ href: "/contact", label: "Send a Message" }];
 
 const legalLinks = [
   { href: "/terms-of-use", label: "Terms of Use" },
@@ -21,9 +27,22 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Company</p>
+            <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Explore</p>
             <ul className="mt-3 space-y-2 text-sm">
-              {companyLinks.map((link) => (
+              {exploreLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-text-muted transition-colors hover:text-primary">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Contact</p>
+            <ul className="mt-3 space-y-2 text-sm">
+              {contactLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-text-muted transition-colors hover:text-primary">
                     {link.label}

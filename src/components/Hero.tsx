@@ -76,7 +76,7 @@ export default function Hero({ onStart }: HeroProps) {
             </div>
           </div>
 
-          <div className="flex items-center justify-center rounded-xl bg-surface-muted p-10 sm:p-14">
+          <div className="hidden items-center justify-center rounded-xl bg-surface-muted p-10 sm:flex sm:p-14">
             <TeacupIllustration />
           </div>
         </div>
