@@ -1,3 +1,11 @@
+import Link from "next/link";
+
+const legalLinks = [
+  { href: "/terms-of-use", label: "Terms of Use" },
+  { href: "/privacy-policy", label: "Privacy Policy" },
+  { href: "/cookie-policy", label: "Cookie Policy" },
+];
+
 export default function Footer() {
   return (
     <footer className="mt-auto w-full border-t border-outline bg-surface">
@@ -9,13 +17,27 @@ export default function Footer() {
               Grown from good habits, brewed one cup at a time.
             </p>
           </div>
-          <div className="text-sm text-text-muted sm:text-right">
-            <p>
-              &copy; {new Date().getFullYear()}{" "}
-              Steep &amp; Sip.
-            </p>
-            <p className="mt-1">For wellness inspiration only — not medical advice.</p>
+
+          <div>
+            <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Legal</p>
+            <ul className="mt-3 space-y-2 text-sm">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-text-muted transition-colors hover:text-primary">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
+
+        <div className="mt-10 border-t border-outline pt-6 text-sm text-text-muted sm:flex sm:items-center sm:justify-between">
+          <p>
+            &copy; {new Date().getFullYear()}{" "}
+            Steep &amp; Sip.
+          </p>
+          <p className="mt-1 sm:mt-0">For wellness inspiration only — not medical advice.</p>
         </div>
       </div>
     </footer>
