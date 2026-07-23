@@ -6,27 +6,6 @@ interface HeroProps {
   onStart: () => void;
 }
 
-function TeacupIllustration() {
-  return (
-    <svg
-      viewBox="0 0 240 220"
-      className="h-auto w-full max-w-xs text-primary"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M95 55c0-8 8-8 8-16s-8-8-8-16" opacity="0.45" />
-      <path d="M120 55c0-8 8-8 8-16s-8-8-8-16" opacity="0.45" />
-      <path d="M145 55c0-8 8-8 8-16s-8-8-8-16" opacity="0.45" />
-      <path d="M60 90h120v28c0 28-27 50-60 50s-60-22-60-50z" />
-      <path d="M180 100c16 0 28 11 28 24s-12 24-28 24" />
-      <ellipse cx="120" cy="185" rx="78" ry="9" />
-    </svg>
-  );
-}
-
 const steps = [
   {
     emoji: "📝",
@@ -51,7 +30,7 @@ export default function Hero({ onStart }: HeroProps) {
   return (
     <>
       <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="mx-auto grid max-w-5xl gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <h1 className="font-display text-4xl leading-tight font-bold tracking-tight text-text sm:text-5xl">
               Find your perfect <span className="italic">tea routine</span>, brewed in minutes
@@ -76,8 +55,14 @@ export default function Hero({ onStart }: HeroProps) {
             </div>
           </div>
 
-          <div className="hidden items-center justify-center rounded-xl bg-surface-muted p-10 sm:flex sm:p-14">
-            <TeacupIllustration />
+          <div className="relative hidden aspect-[4/5] overflow-hidden rounded-xl bg-surface-muted sm:block lg:aspect-auto">
+            {/* eslint-disable-next-line @next/next/no-img-element -- serve the static file
+                directly, bypassing Next's on-the-fly AVIF/WebP optimizer entirely */}
+            <img
+              src="/images/tea-hero.webp"
+              alt="A steaming cup of tea resting on a stack of books"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
           </div>
         </div>
       </section>
