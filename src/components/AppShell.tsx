@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClosingCta from "./ClosingCta";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -26,9 +26,16 @@ export default function AppShell() {
     navigate("landing");
   }
 
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has("openQuiz")) {
+      navigate("quiz");
+      window.history.replaceState(null, "", "/");
+    }
+  }, [navigate]);
+
   return (
     <>
-      <Header onLogoClick={goHome} />
+      <Header onLogoClick={goHome} onStartQuiz={() => navigate("quiz")} />
       <main className={`page-transition flex-1 ${visible ? "is-visible" : "is-hidden"}`}>
         {view === "landing" && (
           <>

@@ -5,16 +5,19 @@ import Link from "next/link";
 
 interface HeaderProps {
   onLogoClick?: () => void;
+  onStartQuiz?: () => void;
 }
 
 const navLinks = [
   { href: "/tea-guide", label: "Tea Guide" },
-  { href: "/tea-routine-pros-and-cons", label: "Pros & Cons" },
   { href: "/history-of-tea", label: "History of Tea" },
 ];
 
-export default function Header({ onLogoClick }: HeaderProps) {
+const QUIZ_LABEL = "Brew My Routine";
+
+export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const quizHref = onStartQuiz ? "/" : "/?openQuiz=1";
 
   return (
     <header className="w-full border-b border-primary/10 bg-surface/80 backdrop-blur-sm sticky top-0 z-10">
@@ -36,17 +39,26 @@ export default function Header({ onLogoClick }: HeaderProps) {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 sm:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="hidden items-center gap-6 sm:flex">
+          <Link
+            href={quizHref}
+            onClick={onStartQuiz}
+            className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover"
+          >
+            {QUIZ_LABEL}
+          </Link>
+          <nav className="flex items-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         <button
           type="button"
@@ -71,6 +83,18 @@ export default function Header({ onLogoClick }: HeaderProps) {
       {menuOpen && (
         <nav className="border-t border-outline bg-surface px-4 py-4 sm:hidden">
           <ul className="flex flex-col gap-1">
+            <li className="mb-2">
+              <Link
+                href={quizHref}
+                onClick={() => {
+                  setMenuOpen(false);
+                  onStartQuiz?.();
+                }}
+                className="block rounded-lg bg-primary px-2 py-2.5 text-center text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover"
+              >
+                {QUIZ_LABEL}
+              </Link>
+            </li>
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
