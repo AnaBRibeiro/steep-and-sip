@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 interface HeaderProps {
   onLogoClick?: () => void;
@@ -48,45 +49,49 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-6 sm:flex">
-          <Link
-            href={quizHref}
-            onClick={onStartQuiz}
-            className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover"
-          >
-            {QUIZ_LABEL}
-          </Link>
-          <nav className="flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+        <div className="flex items-center gap-2 sm:gap-6">
+          <div className="hidden items-center gap-6 sm:flex">
+            <Link
+              href={quizHref}
+              onClick={onStartQuiz}
+              className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover"
+            >
+              {QUIZ_LABEL}
+            </Link>
+            <nav className="flex items-center gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
-        <button
-          type="button"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          className="flex h-9 w-9 items-center justify-center rounded-md text-text transition-colors hover:text-primary sm:hidden"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            className="h-6 w-6"
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="flex h-9 w-9 items-center justify-center rounded-md text-text transition-colors hover:text-primary sm:hidden"
           >
-            {menuOpen ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-          </svg>
-        </button>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              className="h-6 w-6"
+            >
+              {menuOpen ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

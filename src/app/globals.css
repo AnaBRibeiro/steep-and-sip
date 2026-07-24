@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --color-brand-bg: #f9f7f2;
   --color-brand-surface: #ffffff;
@@ -12,6 +14,27 @@
   --color-brand-on-primary: #ffffff;
   --color-brand-outline: #84907f;
   --color-brand-tertiary: #7b545a;
+  color-scheme: light;
+}
+
+/*
+ * Dark palette keeps the same sage/rose hues as light mode, just re-balanced for a dark
+ * background: primary brightens so it reads as text against the dark bg, and on-primary
+ * flips to a dark ink so it still has strong contrast sitting on top of that brighter primary.
+ */
+.dark {
+  --color-brand-bg: #1c211d;
+  --color-brand-surface: #242a25;
+  --color-brand-surface-muted: #1f2420;
+  --color-brand-text: #f2efe9;
+  --color-brand-text-muted: #a9b0a5;
+  --color-brand-primary: #7fa787;
+  --color-brand-primary-hover: #93b899;
+  --color-brand-primary-pale: #28332b;
+  --color-brand-on-primary: #1c211d;
+  --color-brand-outline: #727c6e;
+  --color-brand-tertiary: #c48f95;
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -33,6 +56,13 @@
 body {
   background: var(--color-brand-bg);
   color: var(--color-brand-text);
+}
+
+/* Lets color-driven elements (buttons, cards, borders) fade smoothly when the theme toggles. */
+*,
+*::before,
+*::after {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
 }
 
 /* Visible focus ring for keyboard navigation, matching brand palette */
@@ -75,7 +105,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-transition {
+  .page-transition,
+  *,
+  *::before,
+  *::after {
     transition: none;
   }
 }
