@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SkipLink from "@/components/SkipLink";
 
 export const metadata: Metadata = {
   title: "Page Not Found — Steep & Sip",
@@ -10,8 +11,9 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
+      <SkipLink />
       <Header />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <section className="mx-auto max-w-xl px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
           <p className="text-6xl" aria-hidden="true">
             🍂

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 interface HeaderProps {
@@ -18,6 +18,15 @@ const QUIZ_LABEL = "Brew My Routine";
 export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const quizHref = onStartQuiz ? "/" : "/?openQuiz=1";
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [menuOpen]);
 
   return (
     <header className="w-full border-b border-primary/10 bg-surface/80 backdrop-blur-sm sticky top-0 z-10">

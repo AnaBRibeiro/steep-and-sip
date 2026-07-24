@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import Hero from "./Hero";
 import QuizFlow from "./QuizFlow";
 import ResultsView from "./ResultsView";
+import SkipLink from "./SkipLink";
 import Testimonials from "./Testimonials";
 import { useFadeNavigate } from "@/lib/useFadeNavigate";
 import { QuizAnswers } from "@/lib/types";
@@ -35,8 +36,13 @@ export default function AppShell() {
 
   return (
     <>
+      <SkipLink />
       <Header onLogoClick={goHome} onStartQuiz={() => navigate("quiz")} />
-      <main className={`page-transition flex-1 ${visible ? "is-visible" : "is-hidden"}`}>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className={`page-transition flex-1 ${visible ? "is-visible" : "is-hidden"}`}
+      >
         {view === "landing" && (
           <>
             <Hero onStart={() => navigate("quiz")} />
