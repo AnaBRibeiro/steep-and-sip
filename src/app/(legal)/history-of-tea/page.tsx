@@ -20,7 +20,8 @@ export default function HistoryOfTeaPage() {
         how it happened, tea drinking in China does stretch back thousands of years — first as a
         medicinal drink, and later as an everyday pleasure. By the Tang Dynasty (7th–10th
         century), tea culture had become sophisticated enough that the scholar Lu Yu wrote the{" "}
-        <em>Cha Jing</em> (&ldquo;The Classic of Tea&rdquo;), the first known book entirely
+        <em>Cha Jing</em>{" "}
+        (&ldquo;The Classic of Tea&rdquo;), the first known book entirely
         devoted to the subject.
       </LegalParagraph>
 

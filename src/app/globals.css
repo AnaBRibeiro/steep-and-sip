@@ -65,6 +65,13 @@ body {
   transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
 }
 
+/* Browsers don't give buttons/labels a pointer cursor by default like links get - normalize it. */
+button:not(:disabled),
+label[for],
+[role="button"] {
+  cursor: pointer;
+}
+
 /* Visible focus ring for keyboard navigation, matching brand palette */
 :focus-visible {
   outline: 3px solid var(--color-brand-primary);

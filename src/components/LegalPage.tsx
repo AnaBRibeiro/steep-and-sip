@@ -6,7 +6,7 @@ interface LegalPageProps {
 
 export default function LegalPage({ title, updated, children }: LegalPageProps) {
   return (
-    <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <section className="mx-auto max-w-3xl px-6 py-16 sm:px-6 sm:py-20 lg:px-8">
       <h1 className="font-display text-3xl font-bold text-text sm:text-4xl">{title}</h1>
       <p className="mt-2 text-sm text-text-muted">Last updated: {updated}</p>
       <div className="mt-8">{children}</div>

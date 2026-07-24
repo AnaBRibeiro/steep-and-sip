@@ -9,10 +9,7 @@ interface HeaderProps {
   onStartQuiz?: () => void;
 }
 
-const navLinks = [
-  { href: "/tea-guide", label: "Tea Guide" },
-  { href: "/history-of-tea", label: "History of Tea" },
-];
+const navLinks = [{ href: "/tea-guide", label: "Tea Guide" }];
 
 const QUIZ_LABEL = "Brew My Routine";
 
@@ -95,7 +92,7 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
       </div>
 
       {menuOpen && (
-        <nav className="border-t border-outline bg-surface px-4 py-4 sm:hidden">
+        <nav className="entrance border-t border-outline bg-surface px-4 py-4 sm:hidden">
           <ul className="flex flex-col gap-1">
             <li className="mb-2">
               <Link

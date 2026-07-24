@@ -19,16 +19,16 @@ export default function Footer() {
     <footer className="mt-auto w-full border-t border-outline bg-surface">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
-          <div>
+          <div className="text-center">
             <p className="font-display text-lg font-semibold text-primary">
               <span aria-hidden="true">🍃</span> Steep &amp; Sip
             </p>
-            <p className="mt-2 max-w-xs text-sm text-text-muted">
+            <p className="mx-auto mt-2 max-w-xs text-sm text-text-muted sm:text-xs">
               Grown from good habits, brewed one cup at a time.
             </p>
           </div>
 
-          <div>
+          <div className="text-center">
             <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Explore</p>
             <ul className="mt-3 space-y-2 text-sm">
               {exploreLinks.map((link) => (
@@ -41,7 +41,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="text-center">
             <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Contact</p>
             <ul className="mt-3 space-y-2 text-sm">
               {contactLinks.map((link) => (
@@ -54,7 +54,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="text-center">
             <p className="text-xs font-semibold tracking-widest text-text-muted uppercase">Legal</p>
             <ul className="mt-3 space-y-2 text-sm">
               {legalLinks.map((link) => (
@@ -68,7 +68,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-outline pt-6 text-sm text-text-muted sm:flex sm:items-center sm:justify-between">
+        <div className="mt-16 text-sm text-text-muted sm:flex sm:items-center sm:justify-between">
           <p>
             &copy; {new Date().getFullYear()}{" "}
             Steep &amp; Sip.

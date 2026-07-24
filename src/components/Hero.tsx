@@ -55,7 +55,7 @@ export default function Hero({ onStart }: HeroProps) {
             </div>
           </div>
 
-          <div className="relative hidden aspect-[4/5] overflow-hidden rounded-xl bg-surface-muted sm:block lg:aspect-auto">
+          <div className="relative hidden overflow-hidden rounded-lg bg-surface-muted lg:block">
             {/* eslint-disable-next-line @next/next/no-img-element -- serve the static file
                 directly, bypassing Next's on-the-fly AVIF/WebP optimizer entirely */}
             <img
