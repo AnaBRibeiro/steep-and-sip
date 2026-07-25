@@ -5,6 +5,7 @@ import ClosingCta from "./ClosingCta";
 import Header from "./Header";
 import Footer from "./Footer";
 import Hero from "./Hero";
+import Newsletter from "./Newsletter";
 import QuizFlow from "./QuizFlow";
 import ResultsView from "./ResultsView";
 import SkipLink from "./SkipLink";
@@ -48,6 +49,7 @@ export default function AppShell() {
             <Hero onStart={() => navigate("quiz")} />
             <Testimonials />
             <ClosingCta onStart={() => navigate("quiz")} />
+            <Newsletter />
           </>
         )}
         {view === "quiz" && <QuizFlow onComplete={handleComplete} onCancel={goHome} />}
@@ -55,7 +57,7 @@ export default function AppShell() {
           <ResultsView answers={answers} onRetake={() => navigate("quiz")} onStartOver={goHome} />
         )}
       </main>
-      <Footer />
+      <Footer onStartQuiz={() => navigate("quiz")} />
     </>
   );
 }

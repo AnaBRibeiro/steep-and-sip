@@ -2,33 +2,37 @@
 
 import { useState } from "react";
 
-const CONTACT_EMAIL = "hello@steepandsip.app";
-
 export default function ContactForm() {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const subject = `Message from ${name || "the Steep & Sip site"}`;
-    const body = `${message}\n\n— ${name} (${email})`;
-    const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <p className="entrance mt-8 rounded-lg bg-primary-pale px-6 py-4 text-sm font-semibold text-primary">
+        Thanks, {firstName}! Your message has been sent — we&apos;ll get back to you soon.
+      </p>
+    );
   }
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 space-y-5">
       <div>
         <label htmlFor="contact-name" className="block text-sm font-semibold text-text">
-          Name
+          First name
         </label>
         <input
           id="contact-name"
           type="text"
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
           className="mt-2 w-full rounded-lg border border-outline bg-surface px-4 py-2.5 text-text"
         />
       </div>
@@ -67,13 +71,6 @@ export default function ContactForm() {
       >
         Send Message
       </button>
-
-      <p className="text-xs text-text-muted">
-        Prefer email directly?{" "}
-        <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary underline underline-offset-2">
-          {CONTACT_EMAIL}
-        </a>
-      </p>
     </form>
   );
 }

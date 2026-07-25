@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const exploreLinks = [
-  { href: "/tea-guide", label: "Tea Guide" },
+  { href: "/tea-library", label: "Tea Library" },
   { href: "/tea-routine-pros-and-cons", label: "Pros & Cons" },
   { href: "/history-of-tea", label: "History of Tea" },
 ];
@@ -14,7 +14,13 @@ const legalLinks = [
   { href: "/cookie-policy", label: "Cookie Policy" },
 ];
 
-export default function Footer() {
+interface FooterProps {
+  onStartQuiz?: () => void;
+}
+
+export default function Footer({ onStartQuiz }: FooterProps) {
+  const quizHref = onStartQuiz ? "/" : "/?openQuiz=1";
+
   return (
     <footer className="mt-auto w-full border-t border-outline bg-surface">
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
@@ -38,6 +44,15 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href={quizHref}
+                  onClick={onStartQuiz}
+                  className="text-text-muted transition-colors hover:text-primary"
+                >
+                  Brew My Routine
+                </Link>
+              </li>
             </ul>
           </div>
 

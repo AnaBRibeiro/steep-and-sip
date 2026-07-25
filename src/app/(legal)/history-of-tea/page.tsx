@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import { LegalHeading, LegalParagraph } from "@/components/LegalPage";
+import Newsletter from "@/components/Newsletter";
 
 export const metadata: Metadata = {
   title: "History of Tea — Steep & Sip",
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 
 export default function HistoryOfTeaPage() {
   return (
-    <ContentPage
+    <>
+      <ContentPage
       title="A Brief History of Tea"
       intro="From a legendary accident in ancient China to a daily ritual for billions of people — here's the short version."
     >
@@ -66,6 +68,8 @@ export default function HistoryOfTeaPage() {
         those long-standing traditions, a newer wave of specialty and wellness-focused tea culture
         has grown — which is exactly the spirit Steep &amp; Sip is built in.
       </LegalParagraph>
-    </ContentPage>
+      </ContentPage>
+      <Newsletter />
+    </>
   );
 }

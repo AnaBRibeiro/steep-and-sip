@@ -9,7 +9,7 @@ interface HeaderProps {
   onStartQuiz?: () => void;
 }
 
-const navLinks = [{ href: "/tea-guide", label: "Tea Guide" }];
+const navLinks = [{ href: "/tea-library", label: "Tea Library" }];
 
 const QUIZ_LABEL = "Brew My Routine";
 
