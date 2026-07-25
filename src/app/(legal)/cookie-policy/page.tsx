@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CookiePolicyPage() {
   return (
-    <LegalPage title="Cookie Policy" updated="July 25, 2026">
+    <LegalPage title="Cookie Policy" updated="July 2026">
       <LegalParagraph>
         This page explains how Steep &amp; Sip uses (and mostly doesn&apos;t use) cookies.
       </LegalParagraph>

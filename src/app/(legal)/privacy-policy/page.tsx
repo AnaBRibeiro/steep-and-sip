@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <LegalPage title="Privacy Policy" updated="July 25, 2026">
+    <LegalPage title="Privacy Policy" updated="July 2026">
       <LegalParagraph>
         Steep &amp; Sip is built to be simple and private by design. This page explains what
         little data is involved when you use the site.

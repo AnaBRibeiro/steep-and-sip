@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfUsePage() {
   return (
-    <LegalPage title="Terms of Use" updated="July 22, 2026">
+    <LegalPage title="Terms of Use" updated="July 2026">
       <LegalParagraph>
         Welcome to Steep &amp; Sip. By using this website, you agree to the terms below. If you
         don&apos;t agree with them, please don&apos;t use the site.
