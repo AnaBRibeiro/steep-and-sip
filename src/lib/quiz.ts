@@ -24,7 +24,7 @@ export const questions: [
     question: "What's your main goal right now?",
     helper: "Pick the one that matters most today.",
     options: [
-      { value: "relax", label: "Relax & unwind", description: "Ease tension and slow down", emoji: "🍃" },
+      { value: "relax", label: "Relax & unwind", description: "Ease tension and slow down", emoji: "🧘" },
       { value: "energy", label: "Boost energy & focus", description: "Feel alert and clear-headed", emoji: "⚡" },
       { value: "digestion", label: "Ease digestion", description: "Settle your stomach", emoji: "🌱" },
       { value: "sleep", label: "Better sleep", description: "Wind down for rest", emoji: "🌙" },

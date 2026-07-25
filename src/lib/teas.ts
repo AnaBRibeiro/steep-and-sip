@@ -36,7 +36,7 @@ export const teas: Tea[] = [
   {
     id: "dragonwell",
     name: "Dragonwell",
-    emoji: "🍃",
+    emoji: "🐉",
     category: "Green Tea",
     caffeine: "medium",
     flavors: ["earthy", "fresh"],

@@ -62,7 +62,8 @@ body {
 *,
 *::before,
 *::after {
-  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease,
+    box-shadow 200ms ease;
 }
 
 /* Browsers don't give buttons/labels a pointer cursor by default like links get - normalize it. */
@@ -92,7 +93,7 @@ label[for],
 }
 
 /* Low-opacity, sage-tinted shadow for hover states, per the "soft diffusion" elevation rule. */
-.shadow-ambient {
+@utility shadow-ambient {
   box-shadow: 0 10px 28px -10px rgba(74, 101, 79, 0.18);
 }
 

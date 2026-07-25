@@ -83,8 +83,10 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
                 <label
                   key={option.value}
                   htmlFor={inputId}
-                  className={`flex cursor-pointer items-start gap-3 rounded-lg border bg-surface p-4 transition-colors duration-200 has-[:checked]:border-primary has-[:checked]:bg-primary-pale has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-primary ${
-                    isChecked ? "border-primary" : "border-outline hover:border-primary/50"
+                  className={`flex cursor-pointer items-start gap-3 rounded-lg border bg-surface p-4 transition duration-200 has-[:checked]:border-primary has-[:checked]:bg-primary-pale has-[:focus-visible]:outline has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-primary ${
+                    isChecked
+                      ? "border-primary"
+                      : "border-outline hover:border-primary/50 hover:shadow-ambient"
                   }`}
                 >
                   <input

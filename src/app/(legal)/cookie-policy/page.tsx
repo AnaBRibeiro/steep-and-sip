@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CookiePolicyPage() {
   return (
-    <LegalPage title="Cookie Policy" updated="July 22, 2026">
+    <LegalPage title="Cookie Policy" updated="July 25, 2026">
       <LegalParagraph>
         This page explains how Steep &amp; Sip uses (and mostly doesn&apos;t use) cookies.
       </LegalParagraph>
@@ -22,9 +22,14 @@ export default function CookiePolicyPage() {
 
       <LegalHeading>Cookies we use</LegalHeading>
       <LegalParagraph>
-        Steep &amp; Sip doesn&apos;t use cookies for tracking, analytics, or advertising. The site
-        has no accounts and no preferences to remember, so it currently sets no cookies of its
-        own.
+        Steep &amp; Sip doesn&apos;t use cookies for tracking, analytics, or advertising, and it
+        has no accounts, so it sets no cookies of its own.
+      </LegalParagraph>
+      <LegalParagraph>
+        It does use your browser&apos;s local storage — a similar but separate technology from
+        cookies — to remember your light/dark theme choice between visits. This value stays only
+        on your device, isn&apos;t sent to any server, and isn&apos;t used to identify or track
+        you.
       </LegalParagraph>
       <LegalParagraph>
         The infrastructure that hosts the site may set strictly necessary cookies required for
