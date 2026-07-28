@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "Every tea Steep & Sip can recommend, with steep times and tasting notes.",
 };
 
+export const dynamic = "force-dynamic";
+
 const CAFFEINE_LABELS: Record<string, string> = {
   none: "Caffeine-free",
   low: "Low caffeine",
