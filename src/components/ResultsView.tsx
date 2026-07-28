@@ -2,10 +2,11 @@
 
 import { useMemo } from "react";
 import { buildRoutine, ritualText, TIME_LABELS } from "@/lib/quiz";
-import { QuizAnswers } from "@/lib/types";
+import { QuizAnswers, Tea } from "@/lib/types";
 
 interface ResultsViewProps {
   answers: QuizAnswers;
+  teas: Tea[];
   onRetake: () => void;
   onStartOver: () => void;
 }
@@ -18,8 +19,8 @@ const GOAL_LABELS: Record<QuizAnswers["goal"], string> = {
   wellness: "everyday wellness",
 };
 
-export default function ResultsView({ answers, onRetake, onStartOver }: ResultsViewProps) {
-  const { primary, routine } = useMemo(() => buildRoutine(answers), [answers]);
+export default function ResultsView({ answers, teas, onRetake, onStartOver }: ResultsViewProps) {
+  const { primary, routine } = useMemo(() => buildRoutine(answers, teas), [answers, teas]);
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">

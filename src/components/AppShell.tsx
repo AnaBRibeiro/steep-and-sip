@@ -11,11 +11,15 @@ import ResultsView from "./ResultsView";
 import SkipLink from "./SkipLink";
 import Testimonials from "./Testimonials";
 import { useFadeNavigate } from "@/lib/useFadeNavigate";
-import { QuizAnswers } from "@/lib/types";
+import { QuizAnswers, Tea } from "@/lib/types";
 
 type View = "landing" | "quiz" | "results";
 
-export default function AppShell() {
+interface AppShellProps {
+  teas: Tea[];
+}
+
+export default function AppShell({ teas }: AppShellProps) {
   const { value: view, visible, navigate } = useFadeNavigate<View>("landing");
   const [answers, setAnswers] = useState<QuizAnswers | null>(null);
 
@@ -54,7 +58,12 @@ export default function AppShell() {
         )}
         {view === "quiz" && <QuizFlow onComplete={handleComplete} onCancel={goHome} />}
         {view === "results" && answers && (
-          <ResultsView answers={answers} onRetake={() => navigate("quiz")} onStartOver={goHome} />
+          <ResultsView
+            answers={answers}
+            teas={teas}
+            onRetake={() => navigate("quiz")}
+            onStartOver={goHome}
+          />
         )}
       </main>
       <Footer onStartQuiz={() => navigate("quiz")} />

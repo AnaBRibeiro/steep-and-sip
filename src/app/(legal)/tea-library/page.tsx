@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import Newsletter from "@/components/Newsletter";
-import { teas } from "@/lib/teas";
+import { getTeas } from "@/lib/teas";
 
 export const metadata: Metadata = {
   title: "Tea Library — Steep & Sip",
@@ -15,7 +15,9 @@ const CAFFEINE_LABELS: Record<string, string> = {
   high: "High caffeine",
 };
 
-export default function TeaLibraryPage() {
+export default async function TeaLibraryPage() {
+  const teas = await getTeas();
+
   return (
     <>
       <ContentPage

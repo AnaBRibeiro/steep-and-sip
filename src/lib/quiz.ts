@@ -1,4 +1,3 @@
-import { teas } from "./teas";
 import {
   CaffeineLevel,
   Flavor,
@@ -87,7 +86,7 @@ function scoreTea(tea: Tea, goal: Goal, time: TimeOfDay, flavor: Flavor): number
   return score;
 }
 
-function poolForCaffeine(maxLevel: CaffeineLevel): Tea[] {
+function poolForCaffeine(teas: Tea[], maxLevel: CaffeineLevel): Tea[] {
   const maxIndex = caffeineIndex(maxLevel);
   return teas.filter((tea) => caffeineIndex(tea.caffeine) <= maxIndex);
 }
@@ -132,17 +131,17 @@ const TIME_CAFFEINE_CAP: Record<TimeOfDay, CaffeineLevel> = {
   evening: "low",
 };
 
-export function buildRoutine(answers: QuizAnswers): RoutineResult {
+export function buildRoutine(answers: QuizAnswers, teas: Tea[]): RoutineResult {
   const { goal, caffeine, time, flavor } = answers;
 
-  const primaryPool = poolForCaffeine(caffeine);
+  const primaryPool = poolForCaffeine(teas, caffeine);
   const primary = pickBest(primaryPool, goal, time, flavor, new Set());
 
   const used = new Set<string>([primary.id]);
   const routine: DailyRoutineEntry[] = (["morning", "afternoon", "evening"] as TimeOfDay[]).map(
     (slot) => {
       const cap = CAFFEINE_ORDER[Math.min(caffeineIndex(caffeine), caffeineIndex(TIME_CAFFEINE_CAP[slot]))];
-      const pool = poolForCaffeine(cap);
+      const pool = poolForCaffeine(teas, cap);
       const tea = slot === time ? primary : pickBest(pool, goal, slot, flavor, used);
       used.add(tea.id);
       return { time: slot, tea };

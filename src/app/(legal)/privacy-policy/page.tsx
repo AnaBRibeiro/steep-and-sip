@@ -23,18 +23,26 @@ export default function PrivacyPolicyPage() {
         or refreshing the page clears them completely.
       </LegalParagraph>
 
-      <LegalHeading>The newsletter and contact forms</LegalHeading>
+      <LegalHeading>Newsletter signups</LegalHeading>
       <LegalParagraph>
-        The newsletter signup and the contact page ask for a first name and email address (and a
-        message, for contact). This site is a demonstration: nothing you type into these forms is
-        transmitted anywhere, saved, or stored. It only exists in your browser while the page is
-        open, and disappears the moment you navigate away or refresh.
+        If you sign up for the newsletter, we store your first name and email address so we can
+        send you updates. That&apos;s the only thing on this site that&apos;s actually saved
+        anywhere. We don&apos;t use it for anything else, don&apos;t sell or share it with third
+        parties, and you can ask us to delete it at any time through the contact details on this
+        website.
+      </LegalParagraph>
+
+      <LegalHeading>The contact form</LegalHeading>
+      <LegalParagraph>
+        The contact page asks for a first name, email address, and message. This form is a
+        demonstration: nothing you type into it is transmitted anywhere, saved, or stored. It only
+        exists in your browser while the page is open, and disappears the moment you navigate away
+        or refresh.
       </LegalParagraph>
 
       <LegalHeading>Information we don&apos;t collect</LegalHeading>
       <LegalParagraph>
-        Beyond what&apos;s typed into the forms above (and never sent anywhere), we don&apos;t ask
-        for or collect:
+        Beyond a newsletter signup (see above), we don&apos;t ask for or collect:
       </LegalParagraph>
       <LegalList>
         <li>Payment information.</li>

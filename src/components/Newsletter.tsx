@@ -2,17 +2,36 @@
 
 import { useId, useState } from "react";
 import { useInView } from "@/lib/useInView";
+import { supabase } from "@/lib/supabaseClient";
+
+const UNIQUE_VIOLATION = "23505";
 
 export default function Newsletter() {
   const { ref, state: revealState } = useInView<HTMLDivElement>();
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const nameId = useId();
   const emailId = useId();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+
+    const { error: insertError } = await supabase
+      .from("newsletter_signups")
+      .insert({ first_name: firstName, email });
+
+    setSubmitting(false);
+
+    if (insertError && insertError.code !== UNIQUE_VIOLATION) {
+      setError("Something went wrong — please try again.");
+      return;
+    }
+
     setSubmitted(true);
   }
 
@@ -66,12 +85,15 @@ export default function Newsletter() {
             </div>
             <button
               type="submit"
-              className="rounded-lg bg-primary px-7 py-2.5 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover"
+              disabled={submitting}
+              className="rounded-lg bg-primary px-7 py-2.5 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-40"
             >
-              Subscribe
+              {submitting ? "Subscribing…" : "Subscribe"}
             </button>
           </form>
         )}
+
+        {error && <p className="mt-3 text-sm font-semibold text-tertiary">{error}</p>}
       </div>
     </section>
   );
