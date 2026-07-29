@@ -21,6 +21,7 @@ create policy "Public can insert newsletter signups"
   with check (true);
 
 grant insert on newsletter_signups to anon;
+grant all on newsletter_signups to service_role;
 
 -- ---------------------------------------------------------------------------
 -- Teas
@@ -50,6 +51,7 @@ create policy "Public can read teas"
   using (true);
 
 grant select on teas to anon;
+grant all on teas to service_role;
 
 insert into teas (id, name, emoji, category, caffeine, flavors, goals, times, steep_temp, steep_time, description, ritual)
 values
