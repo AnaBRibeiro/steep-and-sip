@@ -29,7 +29,11 @@ export default async function TeaLibraryPage() {
       >
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {teas.map((tea) => (
-            <div key={tea.id} className="rounded-lg border border-outline bg-surface p-6">
+            <div
+              key={tea.id}
+              id={tea.id}
+              className="scroll-mt-24 rounded-lg border border-outline bg-surface p-6"
+            >
               <div className="flex items-start justify-between gap-3">
                 <span className="text-3xl" aria-hidden="true">
                   {tea.emoji}

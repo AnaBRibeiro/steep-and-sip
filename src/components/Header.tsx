@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
+import TeaSearch from "./TeaSearch";
 
 interface HeaderProps {
   onLogoClick?: () => void;
@@ -15,6 +16,7 @@ const QUIZ_LABEL = "Brew My Routine";
 
 export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const quizHref = onStartQuiz ? "/" : "/?openQuiz=1";
 
   useEffect(() => {
@@ -27,7 +29,11 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
   }, [menuOpen]);
 
   return (
-    <header className="w-full border-b border-primary/10 bg-surface/80 backdrop-blur-sm sticky top-0 z-10">
+    <header
+      className={`sticky top-0 z-10 w-full border-b border-primary/10 ${
+        searchOpen ? "" : "bg-surface/80 backdrop-blur-sm"
+      }`}
+    >
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link
           href="/"
@@ -67,6 +73,8 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
               ))}
             </nav>
           </div>
+
+          <TeaSearch onOpenChange={setSearchOpen} />
 
           <ThemeToggle />
 

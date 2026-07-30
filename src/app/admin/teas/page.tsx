@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
-import DeleteButton from "@/components/admin/DeleteButton";
+import TeaTable from "@/components/admin/TeaTable";
 import { deleteTea } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -34,47 +34,7 @@ export default async function AdminTeasPage() {
         </Link>
       </div>
 
-      <div className="mt-8 overflow-x-auto rounded-lg border border-outline">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-surface-muted text-xs font-semibold tracking-wide text-text-muted uppercase">
-            <tr>
-              <th className="px-4 py-3">Tea</th>
-              <th className="px-4 py-3">Category</th>
-              <th className="px-4 py-3">Caffeine</th>
-              <th className="px-4 py-3 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {teas.map((tea) => (
-              <tr key={tea.id} className="border-t border-outline">
-                <td className="px-4 py-3 text-text">
-                  <span aria-hidden="true" className="mr-2">
-                    {tea.emoji}
-                  </span>
-                  {tea.name}
-                </td>
-                <td className="px-4 py-3 text-text-muted">{tea.category}</td>
-                <td className="px-4 py-3 text-text-muted">{tea.caffeine}</td>
-                <td className="px-4 py-3 text-right">
-                  <Link
-                    href={`/admin/teas/${tea.id}/edit`}
-                    className="text-sm font-semibold text-primary transition-colors hover:text-primary-hover"
-                  >
-                    Edit
-                  </Link>
-                  <DeleteButton
-                    action={deleteTea}
-                    id={tea.id}
-                    confirmLabel={`Delete ${tea.name}?`}
-                    className="ml-4"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {teas.length === 0 && <p className="p-6 text-center text-sm text-text-muted">No teas yet.</p>}
-      </div>
+      <TeaTable teas={teas} onDelete={deleteTea} />
     </section>
   );
 }

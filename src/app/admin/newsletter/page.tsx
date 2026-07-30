@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
-import SubscriberRow from "@/components/admin/SubscriberRow";
+import SubscriberTable from "@/components/admin/SubscriberTable";
 import { createSubscriber, updateSubscriber, deleteSubscriber } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -63,31 +63,11 @@ export default async function AdminNewsletterPage() {
         </button>
       </form>
 
-      <div className="mt-8 overflow-x-auto rounded-lg border border-outline">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-surface-muted text-xs font-semibold tracking-wide text-text-muted uppercase">
-            <tr>
-              <th className="px-4 py-3">First name</th>
-              <th className="px-4 py-3">Email</th>
-              <th className="px-4 py-3">Signed up</th>
-              <th className="px-4 py-3 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {subscribers.map((subscriber) => (
-              <SubscriberRow
-                key={subscriber.id}
-                subscriber={subscriber}
-                onUpdate={updateSubscriber}
-                onDelete={deleteSubscriber}
-              />
-            ))}
-          </tbody>
-        </table>
-        {subscribers.length === 0 && (
-          <p className="p-6 text-center text-sm text-text-muted">No subscribers yet.</p>
-        )}
-      </div>
+      <SubscriberTable
+        subscribers={subscribers}
+        onUpdate={updateSubscriber}
+        onDelete={deleteSubscriber}
+      />
     </section>
   );
 }
