@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import AuthNav from "@/components/AuthNav";
+import { requireAdmin } from "@/lib/auth/dal";
 
 export const metadata: Metadata = {
   title: "Admin — Steep & Sip",
   robots: { index: false, follow: false },
 };
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  await requireAdmin();
+
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <header className="w-full border-b border-outline bg-surface">
@@ -25,14 +29,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               Newsletter
             </Link>
           </nav>
-          <Link
-            href="/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
-          >
-            View site →
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
+            >
+              View site →
+            </Link>
+            <AuthNav />
+          </div>
         </div>
       </header>
       <main className="flex-1">{children}</main>

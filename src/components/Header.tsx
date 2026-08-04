@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import TeaSearch from "./TeaSearch";
+import AuthNav from "./AuthNav";
 
 interface HeaderProps {
   onLogoClick?: () => void;
@@ -77,6 +78,8 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
           <TeaSearch onOpenChange={setSearchOpen} />
 
           <ThemeToggle />
+
+          <AuthNav />
 
           <button
             type="button"
