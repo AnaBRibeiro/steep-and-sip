@@ -28,6 +28,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             >
               Newsletter
             </Link>
+            <Link
+              href="/admin/profiles"
+              className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
+            >
+              Profiles
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             <Link

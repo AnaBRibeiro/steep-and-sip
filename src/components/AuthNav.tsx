@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 
@@ -9,13 +10,20 @@ export default function AuthNav() {
   const router = useRouter();
   const [supabase] = useState(() => createClient());
   const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<"user" | "admin" | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
+    async function loadRole(userId: string) {
+      const { data } = await supabase.from("profiles").select("role").eq("id", userId).single();
+      setRole(data?.role ?? null);
+    }
+
+    supabase.auth.getUser().then(async ({ data }) => {
       setUser(data.user);
+      if (data.user) await loadRole(data.user.id);
       setLoaded(true);
     });
 
@@ -23,6 +31,11 @@ export default function AuthNav() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        loadRole(session.user.id);
+      } else {
+        setRole(null);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -120,6 +133,16 @@ export default function AuthNav() {
           className="entrance absolute top-full right-0 mt-2 w-48 rounded-lg border border-outline bg-surface p-2 shadow-ambient"
         >
           <p className="truncate px-3 py-2 text-xs text-text-muted">{displayName}</p>
+          {role === "admin" && (
+            <Link
+              href="/admin"
+              role="menuitem"
+              onClick={() => setMenuOpen(false)}
+              className="block rounded-md px-3 py-2 text-left text-sm font-semibold text-text transition-colors hover:bg-primary-pale hover:text-primary"
+            >
+              Admin panel
+            </Link>
+          )}
           <button
             type="button"
             role="menuitem"

@@ -4,9 +4,11 @@ export default function AdminHomePage() {
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <h1 className="font-display text-3xl font-bold text-text">Admin</h1>
-      <p className="mt-2 text-text-muted">Manage the site&apos;s newsletter subscribers and tea catalog.</p>
+      <p className="mt-2 text-text-muted">
+        Manage the site&apos;s newsletter subscribers, tea catalog, and signed-in users.
+      </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Link
           href="/admin/teas"
           className="rounded-lg border border-outline bg-surface p-6 transition-colors hover:border-primary/50"
@@ -20,6 +22,13 @@ export default function AdminHomePage() {
         >
           <h2 className="font-display text-lg font-semibold text-text">Newsletter Subscribers</h2>
           <p className="mt-1 text-sm text-text-muted">View, edit, or remove newsletter signups.</p>
+        </Link>
+        <Link
+          href="/admin/profiles"
+          className="rounded-lg border border-outline bg-surface p-6 transition-colors hover:border-primary/50"
+        >
+          <h2 className="font-display text-lg font-semibold text-text">Profiles</h2>
+          <p className="mt-1 text-sm text-text-muted">View signed-in users and manage admin access.</p>
         </Link>
       </div>
     </section>
