@@ -1,29 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
+import { PROTECTED_PREFIXES } from "@/lib/auth/protectedRoutes";
 
 export default function AuthNav() {
   const router = useRouter();
   const [supabase] = useState(() => createClient());
   const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState<"user" | "admin" | null>(null);
+  const [profileAvatarUrl, setProfileAvatarUrl] = useState<string | null>(null);
+  const [profileName, setProfileName] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    async function loadRole(userId: string) {
-      const { data } = await supabase.from("profiles").select("role").eq("id", userId).single();
+  const loadProfile = useCallback(
+    async (userId: string) => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("role, avatar_url, display_name")
+        .eq("id", userId)
+        .single();
       setRole(data?.role ?? null);
-    }
+      setProfileAvatarUrl(data?.avatar_url ?? null);
+      setProfileName(data?.display_name ?? null);
+    },
+    [supabase]
+  );
 
+  useEffect(() => {
     supabase.auth.getUser().then(async ({ data }) => {
       setUser(data.user);
-      if (data.user) await loadRole(data.user.id);
+      if (data.user) await loadProfile(data.user.id);
       setLoaded(true);
     });
 
@@ -32,14 +44,27 @@ export default function AuthNav() {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        loadRole(session.user.id);
+        loadProfile(session.user.id);
       } else {
         setRole(null);
+        setProfileAvatarUrl(null);
+        setProfileName(null);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase]);
+  }, [supabase, loadProfile]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    function handleProfileUpdated() {
+      if (user) loadProfile(user.id);
+    }
+
+    window.addEventListener("profile:updated", handleProfileUpdated);
+    return () => window.removeEventListener("profile:updated", handleProfileUpdated);
+  }, [user, loadProfile]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -73,7 +98,15 @@ export default function AuthNav() {
   async function signOut() {
     await supabase.auth.signOut();
     setMenuOpen(false);
-    router.refresh();
+
+    const onProtectedPage = PROTECTED_PREFIXES.some((prefix) =>
+      window.location.pathname.startsWith(prefix)
+    );
+    if (onProtectedPage) {
+      router.push("/");
+    } else {
+      router.refresh();
+    }
   }
 
   if (!loaded) {
@@ -105,8 +138,9 @@ export default function AuthNav() {
     );
   }
 
-  const avatarUrl = user.user_metadata?.avatar_url as string | undefined;
-  const displayName = (user.user_metadata?.full_name as string | undefined) || user.email || "Account";
+  const avatarUrl = profileAvatarUrl;
+  const displayName =
+    profileName || (user.user_metadata?.full_name as string | undefined) || user.email || "Account";
 
   return (
     <div ref={menuRef} className="relative shrink-0">
@@ -133,6 +167,14 @@ export default function AuthNav() {
           className="entrance absolute top-full right-0 mt-2 w-48 rounded-lg border border-outline bg-surface p-2 shadow-ambient"
         >
           <p className="truncate px-3 py-2 text-xs text-text-muted">{displayName}</p>
+          <Link
+            href="/settings"
+            role="menuitem"
+            onClick={() => setMenuOpen(false)}
+            className="block rounded-md px-3 py-2 text-left text-sm font-semibold text-text transition-colors hover:bg-primary-pale hover:text-primary"
+          >
+            Settings
+          </Link>
           {role === "admin" && (
             <Link
               href="/admin"

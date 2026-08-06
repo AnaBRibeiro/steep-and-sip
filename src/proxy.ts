@@ -1,11 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { PROTECTED_PREFIXES } from "@/lib/auth/protectedRoutes";
 
 /**
  * Runs on nearly every request to keep the Supabase session cookie fresh, and does a
- * lightweight "are you even signed in" check for /admin. This is an optimistic check only
- * (no database query) - the real role check happens in src/app/admin/layout.tsx, close to
- * the data, per Next.js's own guidance for Proxy-based auth.
+ * lightweight "are you even signed in" check for protected routes. This is an optimistic
+ * check only (no database query) - the real checks (admin role, etc.) happen close to the
+ * data in each protected route's own layout/page, per Next.js's own guidance for Proxy-based auth.
  */
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({
@@ -41,7 +42,9 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && request.nextUrl.pathname.startsWith("/admin")) {
+  const isProtected = PROTECTED_PREFIXES.some((prefix) => request.nextUrl.pathname.startsWith(prefix));
+
+  if (!user && isProtected) {
     const redirectUrl = new URL("/", request.url);
     redirectUrl.searchParams.set("next", request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
