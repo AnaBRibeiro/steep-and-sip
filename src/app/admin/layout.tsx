@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AuthNav from "@/components/AuthNav";
+import ThemeToggle from "@/components/ThemeToggle";
 import { requireAdmin } from "@/lib/auth/dal";
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             >
               View site →
             </Link>
+            <ThemeToggle />
             <AuthNav />
           </div>
         </div>
