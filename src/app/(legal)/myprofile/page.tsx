@@ -4,7 +4,8 @@ import Link from "next/link";
 import { requireUser } from "@/lib/auth/dal";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { getFavoriteTeaIds } from "@/lib/favorites";
-import { getTeasByIds } from "@/lib/teas";
+import { getTeas, getTeasByIds } from "@/lib/teas";
+import { getRoutines } from "@/lib/routines.server";
 import ProfileSettingsForm from "@/components/ProfileSettingsForm";
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default async function MyProfilePage() {
   const { data: profile, error } = await supabaseAdmin
     .from("profiles")
     .select(
-      "display_name, username, avatar_url, bio, website, is_public, bio_public, website_public, favorites_public"
+      "display_name, username, avatar_url, bio, website, is_public, bio_public, website_public, favorites_public, routines_public"
     )
     .eq("id", user.id)
     .single();
@@ -52,6 +53,7 @@ export default async function MyProfilePage() {
 
   const favoriteTeaIds = await getFavoriteTeaIds(user.id);
   const favoriteTeas = await getTeasByIds([...favoriteTeaIds]);
+  const [teas, routines] = await Promise.all([getTeas(), getRoutines(user.id)]);
 
   return (
     <section className="mx-auto max-w-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
@@ -60,13 +62,23 @@ export default async function MyProfilePage() {
       {profile.is_public && profile.username && (
         <p className="mt-1 text-sm text-text-muted">
           Your public profile:{" "}
-          <Link href={`/u/${profile.username}`} className="font-semibold text-primary hover:underline">
+          <Link
+            href={`/u/${profile.username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-primary hover:underline"
+          >
             /u/{profile.username}
           </Link>
         </p>
       )}
 
-      <ProfileSettingsForm initialValues={initialValues} favoriteTeas={favoriteTeas} />
+      <ProfileSettingsForm
+        initialValues={initialValues}
+        favoriteTeas={favoriteTeas}
+        routines={routines}
+        teas={teas}
+      />
     </section>
   );
 }

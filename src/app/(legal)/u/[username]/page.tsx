@@ -2,8 +2,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { getFavoriteTeaIds } from "@/lib/favorites";
-import { getTeasByIds } from "@/lib/teas";
+import { getTeas, getTeasByIds } from "@/lib/teas";
+import { getRoutines } from "@/lib/routines.server";
 import FavoritesList from "@/components/FavoritesList";
+import RoutineList from "@/components/RoutineList";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +19,7 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
   const { data: profile } = await supabaseAdmin
     .from("profiles")
     .select(
-      "id, username, display_name, avatar_url, bio, bio_public, website, website_public, is_public, favorites_public"
+      "id, username, display_name, avatar_url, bio, bio_public, website, website_public, is_public, favorites_public, routines_public"
     )
     .eq("username", username)
     .maybeSingle();
@@ -28,6 +30,12 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
   if (profile.favorites_public) {
     const favoriteTeaIds = await getFavoriteTeaIds(profile.id);
     favoriteTeas = await getTeasByIds([...favoriteTeaIds]);
+  }
+
+  let routines: Awaited<ReturnType<typeof getRoutines>> = [];
+  let teas: Awaited<ReturnType<typeof getTeas>> = [];
+  if (profile.routines_public) {
+    [routines, teas] = await Promise.all([getRoutines(profile.id), getTeas()]);
   }
 
   return (
@@ -73,6 +81,15 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
           <h2 className="font-display text-xl font-bold text-text">Favorites</h2>
           <div className="mt-4">
             <FavoritesList teas={favoriteTeas} emptyMessage="No favorites shared yet." />
+          </div>
+        </div>
+      )}
+
+      {profile.routines_public && (
+        <div className="mt-10">
+          <h2 className="font-display text-xl font-bold text-text">Routines</h2>
+          <div className="mt-4">
+            <RoutineList routines={routines} teas={teas} emptyMessage="No routines shared yet." />
           </div>
         </div>
       )}

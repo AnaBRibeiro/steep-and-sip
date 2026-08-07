@@ -4,7 +4,11 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { updateProfile, type UpdateProfileState } from "@/app/(legal)/myprofile/actions";
 import type { Tea } from "@/lib/types";
+import type { RoutineRow } from "@/lib/routines";
+import { MAX_ROUTINES } from "@/lib/routines";
 import FavoritesList from "./FavoritesList";
+import RoutineForm from "./RoutineForm";
+import RoutineList from "./RoutineList";
 
 interface ProfileSettingsFormProps {
   initialValues: {
@@ -17,15 +21,23 @@ interface ProfileSettingsFormProps {
     bio_public: boolean;
     website_public: boolean;
     favorites_public: boolean;
+    routines_public: boolean;
   };
   favoriteTeas: Tea[];
+  routines: RoutineRow[];
+  teas: Tea[];
 }
 
 const DISPLAY_NAME_MAX_LENGTH = 40;
 const BIO_MAX_LENGTH = 250;
 const initialState: UpdateProfileState = {};
 
-export default function ProfileSettingsForm({ initialValues, favoriteTeas }: ProfileSettingsFormProps) {
+export default function ProfileSettingsForm({
+  initialValues,
+  favoriteTeas,
+  routines,
+  teas,
+}: ProfileSettingsFormProps) {
   const [state, formAction, pending] = useActionState(updateProfile, initialState);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(initialValues.avatar_url);
@@ -63,11 +75,8 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
   const showSaveButton = !state.success || dirty;
 
   return (
-    <form
-      action={formAction}
-      onChange={() => setDirty(true)}
-      className="mt-8 space-y-6"
-    >
+    <div className="mt-8 space-y-6">
+      <form id="profile-form" action={formAction} onChange={() => setDirty(true)} className="space-y-6">
       <div className="flex items-center gap-4">
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element -- small avatar preview, not worth Next's image pipeline
@@ -107,7 +116,7 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
               </button>
             )}
           </div>
-          <p className="mt-1 text-xs text-text-muted">JPG or PNG, up to 2MB.</p>
+          <p className="mt-1 text-xs text-text-muted">JPG or PNG file, up to 2MB.</p>
         </div>
       </div>
 
@@ -147,7 +156,8 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
           className="mt-2 w-full rounded-lg border border-outline bg-surface px-4 py-2.5 text-text"
         />
         <p className="mt-1 text-xs text-text-muted">
-          3-20 characters: lowercase letters, numbers, and underscores only.
+          3-20 characters: lowercase letters, numbers, and underscores only. This is what your
+          public profile URL is based on.
         </p>
       </div>
 
@@ -185,6 +195,7 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
           className="mt-2 w-full rounded-lg border border-outline bg-surface px-4 py-2.5 text-text"
         />
       </div>
+      </form>
 
       <div>
         <h2 className="font-display text-lg font-bold text-text">Favorites</h2>
@@ -200,9 +211,41 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
         </div>
       </div>
 
-      <div className="mt-14 mb-14 space-y-3 rounded-lg border border-outline bg-primary-pale p-4">
+      <div>
+        <h2 className="font-display text-lg font-bold text-text">Routines</h2>
+        <p className="mt-1 text-sm text-text-muted">
+          Build up to {MAX_ROUTINES} routines from teas for the morning, afternoon, and/or
+          evening.
+        </p>
+        <div className="mt-4">
+          <RoutineList
+            routines={routines}
+            teas={teas}
+            editable
+            emptyMessage="You haven't saved any routines yet."
+          />
+        </div>
+        <div className="mt-4">
+          <RoutineForm
+            key={routines.length}
+            teas={teas}
+            disabled={routines.length >= MAX_ROUTINES}
+            maxRoutines={MAX_ROUTINES}
+          />
+        </div>
+      </div>
+
+      <div
+        className="mt-14 mb-14 space-y-3 rounded-lg border border-outline bg-primary-pale p-4"
+        onChange={() => setDirty(true)}
+      >
         <label className="flex items-center gap-2 text-sm font-semibold text-text">
-          <input type="checkbox" name="is_public" defaultChecked={initialValues.is_public} />
+          <input
+            type="checkbox"
+            name="is_public"
+            form="profile-form"
+            defaultChecked={initialValues.is_public}
+          />
           Make my profile public
         </label>
         <p className="text-xs text-text-muted">
@@ -214,6 +257,8 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
             Your public profile:{" "}
             <Link
               href={`/u/${initialValues.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="font-semibold text-primary hover:underline"
             >
               /u/{initialValues.username}
@@ -221,13 +266,19 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
           </p>
         )}
         <label className="flex items-center gap-2 pl-6 text-sm text-text">
-          <input type="checkbox" name="bio_public" defaultChecked={initialValues.bio_public} />
+          <input
+            type="checkbox"
+            name="bio_public"
+            form="profile-form"
+            defaultChecked={initialValues.bio_public}
+          />
           Show my Bio
         </label>
         <label className="flex items-center gap-2 pl-6 text-sm text-text">
           <input
             type="checkbox"
             name="website_public"
+            form="profile-form"
             defaultChecked={initialValues.website_public}
           />
           Show my Link
@@ -236,9 +287,19 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
           <input
             type="checkbox"
             name="favorites_public"
+            form="profile-form"
             defaultChecked={initialValues.favorites_public}
           />
           Show my Favorites
+        </label>
+        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+          <input
+            type="checkbox"
+            name="routines_public"
+            form="profile-form"
+            defaultChecked={initialValues.routines_public}
+          />
+          Show my Routines
         </label>
       </div>
 
@@ -256,12 +317,13 @@ export default function ProfileSettingsForm({ initialValues, favoriteTeas }: Pro
       {showSaveButton && (
         <button
           type="submit"
+          form="profile-form"
           disabled={pending}
           className="rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover disabled:pointer-events-none disabled:opacity-40"
         >
           {pending ? "Saving…" : "Save changes"}
         </button>
       )}
-    </form>
+    </div>
   );
 }
