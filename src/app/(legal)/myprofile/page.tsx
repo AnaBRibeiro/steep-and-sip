@@ -5,7 +5,7 @@ import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import ProfileSettingsForm from "@/components/ProfileSettingsForm";
 
 export const metadata: Metadata = {
-  title: "Settings — Steep & Sip",
+  title: "My Profile — Steep & Sip",
   robots: { index: false, follow: false },
 };
 
@@ -26,7 +26,7 @@ function suggestUsername(seed: string, userId: string): string {
   return `${base || "user"}_${suffix}`.slice(0, 20);
 }
 
-export default async function SettingsPage() {
+export default async function MyProfilePage() {
   const user = await requireUser();
 
   const { data: profile, error } = await supabaseAdmin
@@ -47,7 +47,7 @@ export default async function SettingsPage() {
 
   return (
     <section className="mx-auto max-w-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-      <h1 className="font-display text-3xl font-bold text-text sm:text-4xl">Settings</h1>
+      <h1 className="font-display text-3xl font-bold text-text sm:text-4xl">My Profile</h1>
       <p className="mt-3 text-text-muted">Edit how your profile appears.</p>
 
       <ProfileSettingsForm initialValues={initialValues} />

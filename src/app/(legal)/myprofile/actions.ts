@@ -83,6 +83,6 @@ export async function updateProfile(
     return { error: error.message };
   }
 
-  revalidatePath("/settings");
+  revalidatePath("/myprofile");
   return { success: true };
 }

@@ -168,12 +168,12 @@ export default function AuthNav() {
         >
           <p className="truncate px-3 py-2 text-xs text-text-muted">{displayName}</p>
           <Link
-            href="/settings"
+            href="/myprofile"
             role="menuitem"
             onClick={() => setMenuOpen(false)}
             className="block rounded-md px-3 py-2 text-left text-sm font-semibold text-text transition-colors hover:bg-primary-pale hover:text-primary"
           >
-            Settings
+            My Profile
           </Link>
           {role === "admin" && (
             <Link

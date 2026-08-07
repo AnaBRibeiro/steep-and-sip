@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
-import { updateProfile, type UpdateProfileState } from "@/app/(legal)/settings/actions";
+import { updateProfile, type UpdateProfileState } from "@/app/(legal)/myprofile/actions";
 
 interface ProfileSettingsFormProps {
   initialValues: {
