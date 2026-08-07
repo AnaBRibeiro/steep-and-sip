@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import Newsletter from "@/components/Newsletter";
+import FavoriteButton from "@/components/FavoriteButton";
 import { getTeas } from "@/lib/teas";
+import { getFavoriteTeaIds } from "@/lib/favorites";
+import { getUser } from "@/lib/auth/dal";
 
 export const metadata: Metadata = {
   title: "Tea Library — Steep & Sip",
@@ -18,7 +21,8 @@ const CAFFEINE_LABELS: Record<string, string> = {
 };
 
 export default async function TeaLibraryPage() {
-  const teas = await getTeas();
+  const [teas, user] = await Promise.all([getTeas(), getUser()]);
+  const favoriteTeaIds = user ? await getFavoriteTeaIds(user.id) : new Set<string>();
 
   return (
     <>
@@ -38,9 +42,18 @@ export default async function TeaLibraryPage() {
                 <span className="text-3xl" aria-hidden="true">
                   {tea.emoji}
                 </span>
-                <span className="rounded-lg bg-primary-pale px-2.5 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
-                  {CAFFEINE_LABELS[tea.caffeine]}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-lg bg-primary-pale px-2.5 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
+                    {CAFFEINE_LABELS[tea.caffeine]}
+                  </span>
+                  {user && (
+                    <FavoriteButton
+                      teaId={tea.id}
+                      teaName={tea.name}
+                      initialFavorited={favoriteTeaIds.has(tea.id)}
+                    />
+                  )}
+                </div>
               </div>
               <h2 className="mt-3 font-display text-lg font-semibold text-text">{tea.name}</h2>
               <p className="text-xs font-semibold tracking-wide text-text-muted uppercase">

@@ -16,14 +16,11 @@ interface TeaRow {
   ritual: string;
 }
 
-export async function getTeas(): Promise<Tea[]> {
-  const { data, error } = await supabase
-    .from("teas")
-    .select("id, name, emoji, category, caffeine, flavors, goals, times, steep_temp, steep_time, description, ritual");
+const TEA_COLUMNS =
+  "id, name, emoji, category, caffeine, flavors, goals, times, steep_temp, steep_time, description, ritual";
 
-  if (error) throw error;
-
-  return (data as TeaRow[]).map((row) => ({
+function mapTeaRow(row: TeaRow): Tea {
+  return {
     id: row.id,
     name: row.name,
     emoji: row.emoji,
@@ -36,5 +33,23 @@ export async function getTeas(): Promise<Tea[]> {
     steepTime: row.steep_time,
     description: row.description,
     ritual: row.ritual,
-  }));
+  };
+}
+
+export async function getTeas(): Promise<Tea[]> {
+  const { data, error } = await supabase.from("teas").select(TEA_COLUMNS);
+
+  if (error) throw error;
+
+  return (data as TeaRow[]).map(mapTeaRow);
+}
+
+export async function getTeasByIds(ids: string[]): Promise<Tea[]> {
+  if (ids.length === 0) return [];
+
+  const { data, error } = await supabase.from("teas").select(TEA_COLUMNS).in("id", ids);
+
+  if (error) throw error;
+
+  return (data as TeaRow[]).map(mapTeaRow);
 }

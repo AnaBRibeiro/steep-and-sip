@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import type { User } from "@supabase/supabase-js";
+import Link from "next/link";
 import { requireUser } from "@/lib/auth/dal";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { getFavoriteTeaIds } from "@/lib/favorites";
+import { getTeasByIds } from "@/lib/teas";
 import ProfileSettingsForm from "@/components/ProfileSettingsForm";
 
 export const metadata: Metadata = {
@@ -31,7 +34,9 @@ export default async function MyProfilePage() {
 
   const { data: profile, error } = await supabaseAdmin
     .from("profiles")
-    .select("display_name, username, avatar_url, bio, website, is_public")
+    .select(
+      "display_name, username, avatar_url, bio, website, is_public, bio_public, website_public, favorites_public"
+    )
     .eq("id", user.id)
     .single();
 
@@ -45,12 +50,23 @@ export default async function MyProfilePage() {
     username: profile.username ?? suggestUsername(fallbackDisplayName || user.email || "user", user.id),
   };
 
+  const favoriteTeaIds = await getFavoriteTeaIds(user.id);
+  const favoriteTeas = await getTeasByIds([...favoriteTeaIds]);
+
   return (
     <section className="mx-auto max-w-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
       <h1 className="font-display text-3xl font-bold text-text sm:text-4xl">My Profile</h1>
       <p className="mt-3 text-text-muted">Edit how your profile appears.</p>
+      {profile.is_public && profile.username && (
+        <p className="mt-1 text-sm text-text-muted">
+          Your public profile:{" "}
+          <Link href={`/u/${profile.username}`} className="font-semibold text-primary hover:underline">
+            /u/{profile.username}
+          </Link>
+        </p>
+      )}
 
-      <ProfileSettingsForm initialValues={initialValues} />
+      <ProfileSettingsForm initialValues={initialValues} favoriteTeas={favoriteTeas} />
     </section>
   );
 }

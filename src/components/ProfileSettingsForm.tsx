@@ -1,7 +1,10 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { updateProfile, type UpdateProfileState } from "@/app/(legal)/myprofile/actions";
+import type { Tea } from "@/lib/types";
+import FavoritesList from "./FavoritesList";
 
 interface ProfileSettingsFormProps {
   initialValues: {
@@ -11,14 +14,18 @@ interface ProfileSettingsFormProps {
     bio: string | null;
     website: string | null;
     is_public: boolean;
+    bio_public: boolean;
+    website_public: boolean;
+    favorites_public: boolean;
   };
+  favoriteTeas: Tea[];
 }
 
 const DISPLAY_NAME_MAX_LENGTH = 40;
 const BIO_MAX_LENGTH = 250;
 const initialState: UpdateProfileState = {};
 
-export default function ProfileSettingsForm({ initialValues }: ProfileSettingsFormProps) {
+export default function ProfileSettingsForm({ initialValues, favoriteTeas }: ProfileSettingsFormProps) {
   const [state, formAction, pending] = useActionState(updateProfile, initialState);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(initialValues.avatar_url);
@@ -179,14 +186,61 @@ export default function ProfileSettingsForm({ initialValues }: ProfileSettingsFo
         />
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-text">
-        <input type="checkbox" name="is_public" defaultChecked={initialValues.is_public} />
-        Make my profile public
-      </label>
-      <p className="-mt-4 text-xs text-text-muted">
-        Public profiles aren&apos;t viewable by others yet — this just saves your preference for when
-        that feature launches.
-      </p>
+      <div>
+        <h2 className="font-display text-lg font-bold text-text">Favorites</h2>
+        <p className="mt-1 text-sm text-text-muted">
+          Teas you&apos;ve saved from the tea library and your quiz results.
+        </p>
+        <div className="mt-4">
+          <FavoritesList
+            teas={favoriteTeas}
+            editable
+            emptyMessage="You haven't favorited any teas yet."
+          />
+        </div>
+      </div>
+
+      <div className="mt-14 mb-14 space-y-3 rounded-lg border border-outline bg-primary-pale p-4">
+        <label className="flex items-center gap-2 text-sm font-semibold text-text">
+          <input type="checkbox" name="is_public" defaultChecked={initialValues.is_public} />
+          Make my profile public
+        </label>
+        <p className="text-xs text-text-muted">
+          Your avatar and display name are always shown when your profile is public. Choose what
+          else to include:
+        </p>
+        {initialValues.is_public && initialValues.username && (
+          <p className="text-xs text-text-muted">
+            Your public profile:{" "}
+            <Link
+              href={`/u/${initialValues.username}`}
+              className="font-semibold text-primary hover:underline"
+            >
+              /u/{initialValues.username}
+            </Link>
+          </p>
+        )}
+        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+          <input type="checkbox" name="bio_public" defaultChecked={initialValues.bio_public} />
+          Show my Bio
+        </label>
+        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+          <input
+            type="checkbox"
+            name="website_public"
+            defaultChecked={initialValues.website_public}
+          />
+          Show my Link
+        </label>
+        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+          <input
+            type="checkbox"
+            name="favorites_public"
+            defaultChecked={initialValues.favorites_public}
+          />
+          Show my Favorites
+        </label>
+      </div>
 
       {state.error && (
         <p className="rounded-lg bg-primary-pale px-4 py-3 text-sm font-semibold text-tertiary">

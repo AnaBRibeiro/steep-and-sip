@@ -17,9 +17,11 @@ type View = "landing" | "quiz" | "results";
 
 interface AppShellProps {
   teas: Tea[];
+  loggedIn: boolean;
+  favoriteTeaIds: string[];
 }
 
-export default function AppShell({ teas }: AppShellProps) {
+export default function AppShell({ teas, loggedIn, favoriteTeaIds }: AppShellProps) {
   const { value: view, visible, navigate } = useFadeNavigate<View>("landing");
   const [answers, setAnswers] = useState<QuizAnswers | null>(null);
 
@@ -61,6 +63,8 @@ export default function AppShell({ teas }: AppShellProps) {
           <ResultsView
             answers={answers}
             teas={teas}
+            loggedIn={loggedIn}
+            favoriteTeaIds={favoriteTeaIds}
             onRetake={() => navigate("quiz")}
             onStartOver={goHome}
           />

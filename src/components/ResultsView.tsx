@@ -3,10 +3,13 @@
 import { useMemo } from "react";
 import { buildRoutine, ritualText, TIME_LABELS } from "@/lib/quiz";
 import { QuizAnswers, Tea } from "@/lib/types";
+import FavoriteButton from "./FavoriteButton";
 
 interface ResultsViewProps {
   answers: QuizAnswers;
   teas: Tea[];
+  loggedIn: boolean;
+  favoriteTeaIds: string[];
   onRetake: () => void;
   onStartOver: () => void;
 }
@@ -19,8 +22,16 @@ const GOAL_LABELS: Record<QuizAnswers["goal"], string> = {
   wellness: "everyday wellness",
 };
 
-export default function ResultsView({ answers, teas, onRetake, onStartOver }: ResultsViewProps) {
+export default function ResultsView({
+  answers,
+  teas,
+  loggedIn,
+  favoriteTeaIds,
+  onRetake,
+  onStartOver,
+}: ResultsViewProps) {
   const { primary, routine } = useMemo(() => buildRoutine(answers, teas), [answers, teas]);
+  const favoriteSet = useMemo(() => new Set(favoriteTeaIds), [favoriteTeaIds]);
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
@@ -41,13 +52,24 @@ export default function ResultsView({ answers, teas, onRetake, onStartOver }: Re
           >
             <span aria-hidden="true">{primary.emoji}</span>
           </div>
-          <div>
-            <p className="text-sm font-semibold tracking-wide text-primary uppercase">
-              {primary.category} · Right now
-            </p>
-            <h2 className="mt-1 font-display text-2xl font-bold text-text sm:text-3xl">
-              {primary.name}
-            </h2>
+          <div className="flex-1">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold tracking-wide text-primary uppercase">
+                  {primary.category} · Right now
+                </p>
+                <h2 className="mt-1 font-display text-2xl font-bold text-text sm:text-3xl">
+                  {primary.name}
+                </h2>
+              </div>
+              {loggedIn && (
+                <FavoriteButton
+                  teaId={primary.id}
+                  teaName={primary.name}
+                  initialFavorited={favoriteSet.has(primary.id)}
+                />
+              )}
+            </div>
             <p className="mt-3 text-text-muted">{primary.description}</p>
 
             <dl className="mt-5 grid grid-cols-2 gap-4 sm:max-w-sm">
@@ -87,10 +109,20 @@ export default function ResultsView({ answers, teas, onRetake, onStartOver }: Re
                 isCurrent ? "border-primary bg-primary-pale" : "border-outline bg-surface"
               }`}
             >
-              <p className="text-xs font-semibold tracking-wide text-primary uppercase">
-                {TIME_LABELS[time]}
-                {isCurrent && " · You are here"}
-              </p>
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-xs font-semibold tracking-wide text-primary uppercase">
+                  {TIME_LABELS[time]}
+                  {isCurrent && " · You are here"}
+                </p>
+                {loggedIn && (
+                  <FavoriteButton
+                    teaId={tea.id}
+                    teaName={tea.name}
+                    initialFavorited={favoriteSet.has(tea.id)}
+                    className="-mt-1 -mr-1"
+                  />
+                )}
+              </div>
               <div className="mt-2 flex items-center gap-2">
                 <span className="text-2xl" aria-hidden="true">
                   {tea.emoji}

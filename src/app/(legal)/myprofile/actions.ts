@@ -24,6 +24,9 @@ export async function updateProfile(
   const bio = String(formData.get("bio") ?? "").trim();
   const website = String(formData.get("website") ?? "").trim();
   const isPublic = formData.get("is_public") === "on";
+  const bioPublic = formData.get("bio_public") === "on";
+  const websitePublic = formData.get("website_public") === "on";
+  const favoritesPublic = formData.get("favorites_public") === "on";
   const avatarFile = formData.get("avatar");
   const removeAvatar = formData.get("remove_avatar") === "true";
 
@@ -48,6 +51,9 @@ export async function updateProfile(
     bio: bio || null,
     website: website || null,
     is_public: isPublic,
+    bio_public: bioPublic,
+    website_public: websitePublic,
+    favorites_public: favoritesPublic,
   };
 
   if (avatarFile instanceof File && avatarFile.size > 0) {
