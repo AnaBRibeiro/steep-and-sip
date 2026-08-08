@@ -56,7 +56,7 @@ export default function RoutineForm({ teas, disabled, maxRoutines }: RoutineForm
         disabled={pending}
         className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
       >
-        {pending ? "Saving…" : "Add routine"}
+        {pending ? "Saving…" : "Save routine"}
       </button>
     </form>
   );
