@@ -33,15 +33,36 @@ function suggestUsername(seed: string, userId: string): string {
 export default async function MyProfilePage() {
   const user = await requireUser();
 
-  const { data: profile, error } = await supabaseAdmin
+  const PROFILE_COLUMNS =
+    "display_name, username, avatar_url, bio, website, is_public, bio_public, website_public, favorites_public, routines_public";
+
+  const { data: existingProfile, error } = await supabaseAdmin
     .from("profiles")
-    .select(
-      "display_name, username, avatar_url, bio, website, is_public, bio_public, website_public, favorites_public, routines_public"
-    )
+    .select(PROFILE_COLUMNS)
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   if (error) throw new Error(error.message);
+
+  let profile = existingProfile;
+  if (!profile) {
+    // The database trigger that normally creates this row on sign-up didn't fire — self-heal
+    // instead of breaking the page for this user.
+    const { data: created, error: createError } = await supabaseAdmin
+      .from("profiles")
+      .insert({
+        id: user.id,
+        email: user.email,
+        display_name: getGoogleName(user) || null,
+        avatar_url: (user.user_metadata?.avatar_url as string | undefined) ?? null,
+        role: "user",
+      })
+      .select(PROFILE_COLUMNS)
+      .single();
+
+    if (createError) throw new Error(createError.message);
+    profile = created;
+  }
 
   const fallbackDisplayName = getGoogleName(user) || user.email?.split("@")[0] || "";
 
