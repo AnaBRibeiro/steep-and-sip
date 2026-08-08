@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage() {
       <LegalList>
         <li>Your email address (from Google) — never shown publicly.</li>
         <li>A display name and username, which you can edit at any time.</li>
-        <li>An optional profile photo you upload (JPG or PNG, up to 2MB), or your Google photo.</li>
+        <li>An optional profile photo you upload (JPG or PNG file, up to 2MB), or your Google photo.</li>
         <li>An optional short bio and link.</li>
         <li>Your Favorites (teas you&apos;ve saved) and Routines (custom tea combinations you&apos;ve built).</li>
       </LegalList>
@@ -81,7 +81,7 @@ export default function PrivacyPolicyPage() {
       <LegalHeading>Who can see your account information</LegalHeading>
       <LegalParagraph>
         Beyond what you choose to make public, only site administrators can see account details
-        (such as your email, join date, and role) — used solely to operate and support the site,
+        (such as your email and join date) — used solely to operate and support the site,
         such as managing the tea catalog or handling account issues.
       </LegalParagraph>
 
@@ -99,7 +99,12 @@ export default function PrivacyPolicyPage() {
         secure cookie keeps you logged in between visits. Your light/dark theme choice is saved
         via local storage (not a cookie), stays on your device, and is never sent to a server. See
         our{" "}
-        <Link href="/cookie-policy" className="text-primary underline underline-offset-2">
+        <Link
+          href="/cookie-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline underline-offset-2"
+        >
           Cookie Policy
         </Link>{" "}
         for details.
@@ -108,8 +113,8 @@ export default function PrivacyPolicyPage() {
       <LegalHeading>Deleting your account</LegalHeading>
       <LegalParagraph>
         You can sign out at any time from the account menu. To permanently delete your account and
-        all associated data (profile, favorites, and routines), contact us using the details below
-        and we&apos;ll remove it.
+        all associated data (profile, favorites, and routines), reach out through the contact
+        details provided on this website.
       </LegalParagraph>
 
       <LegalHeading>Children&apos;s privacy</LegalHeading>

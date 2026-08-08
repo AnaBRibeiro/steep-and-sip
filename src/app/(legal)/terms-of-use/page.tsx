@@ -34,7 +34,8 @@ export default function TermsOfUsePage() {
       <LegalHeading>Public profiles and your content</LegalHeading>
       <LegalParagraph>
         If you choose to make your profile public, you&apos;re responsible for what you share in
-        it (display name, bio, link, favorites, and routines). Don&apos;t use it to post anything
+        it (display name, profile image, bio, link, favorites, and routines). Don&apos;t use it to
+        post anything
         illegal, abusive, or that infringes someone else&apos;s rights. We may remove public
         content, or turn a profile private, if it violates these terms.
       </LegalParagraph>

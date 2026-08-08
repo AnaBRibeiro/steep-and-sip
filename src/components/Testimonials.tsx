@@ -11,7 +11,7 @@ const testimonials = [
   },
   {
     quote:
-      "I've tried a handful of tea apps. This is the first one that just works — no sign-up, no clutter, just my routine.",
+      "I've tried a handful of tea apps. This is the first one that just works — quick, clean, and actually useful.",
     name: "Jonas R.",
     role: "Remote worker",
   },

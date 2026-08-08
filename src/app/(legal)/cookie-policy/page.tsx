@@ -54,9 +54,13 @@ export default function CookiePolicyPage() {
 
       <LegalHeading>Changes to this policy</LegalHeading>
       <LegalParagraph>
-        If this ever changes — for example, if we add analytics in the future — we&apos;ll update
-        this page and the date above, along with our{" "}
-        <Link href="/privacy-policy" className="text-primary underline underline-offset-2">
+        If this ever changes, we&apos;ll update this page and the date above, along with our{" "}
+        <Link
+          href="/privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline underline-offset-2"
+        >
           Privacy Policy
         </Link>
         .

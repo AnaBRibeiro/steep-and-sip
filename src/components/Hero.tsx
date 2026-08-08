@@ -15,7 +15,7 @@ const steps = [
   {
     emoji: "🍵",
     title: "Get matched instantly",
-    body: "No sign-up — just a routine generated on the spot, for instant clarity in your daily brew.",
+    body: "Your routine is generated on the spot, for instant clarity in your daily brew.",
   },
   {
     emoji: "🌤️",
@@ -49,7 +49,7 @@ export default function Hero({ onStart }: HeroProps) {
                 <span aria-hidden="true">→</span>
               </button>
               <div className="text-xs">
-                <p className="font-semibold tracking-wide text-text uppercase">No account. Just tea.</p>
+                <p className="font-semibold tracking-wide text-text uppercase">No pressure. Just tea.</p>
                 <p className="mt-0.5 text-text-muted italic">Takes less than 30s</p>
               </div>
             </div>
