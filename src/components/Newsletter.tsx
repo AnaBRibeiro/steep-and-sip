@@ -57,7 +57,7 @@ export default function Newsletter() {
             onSubmit={handleSubmit}
             className="mt-12 flex flex-col gap-3 text-left sm:flex-row sm:items-end"
           >
-            <div className="flex-1">
+            <div className="flex-[1.4]">
               <label htmlFor={nameId} className="block text-sm font-semibold text-text">
                 First name
               </label>
@@ -70,7 +70,7 @@ export default function Newsletter() {
                 className="mt-2 w-full rounded-lg border border-outline bg-surface px-4 py-2.5 text-text"
               />
             </div>
-            <div className="flex-[1.5]">
+            <div className="flex-[2.2]">
               <label htmlFor={emailId} className="block text-sm font-semibold text-text">
                 Email
               </label>
