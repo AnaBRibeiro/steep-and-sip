@@ -31,6 +31,7 @@ interface ProfileSettingsFormProps {
 const DISPLAY_NAME_MAX_LENGTH = 40;
 const BIO_MAX_LENGTH = 250;
 const initialState: UpdateProfileState = {};
+const SITE_ORIGIN = "https://steep-and-sip.vercel.app";
 
 export default function ProfileSettingsForm({
   initialValues,
@@ -164,7 +165,7 @@ export default function ProfileSettingsForm({
       <div>
         <div className="flex items-baseline justify-between">
           <label htmlFor="bio" className="block text-sm font-semibold text-text">
-            Bio <span className="font-normal text-text-muted">(optional)</span>
+            Bio
           </label>
           <span className="text-xs text-text-muted">
             {bioLength}/{BIO_MAX_LENGTH}
@@ -184,7 +185,7 @@ export default function ProfileSettingsForm({
 
       <div>
         <label htmlFor="website" className="block text-sm font-semibold text-text">
-          Link <span className="font-normal text-text-muted">(optional)</span>
+          Link
         </label>
         <input
           id="website"
@@ -198,7 +199,7 @@ export default function ProfileSettingsForm({
       </form>
 
       <div>
-        <h2 className="font-display text-lg font-bold text-text">Favorites</h2>
+        <h2 className="text-sm font-semibold text-text">Favorites</h2>
         <p className="mt-1 text-sm text-text-muted">
           Teas you&apos;ve saved from the tea library and your quiz results.
         </p>
@@ -212,7 +213,7 @@ export default function ProfileSettingsForm({
       </div>
 
       <div>
-        <h2 className="font-display text-lg font-bold text-text">Routines</h2>
+        <h2 className="text-sm font-semibold text-text">Routines</h2>
         <p className="mt-1 text-sm text-text-muted">
           Build up to {MAX_ROUTINES} routines from teas for the morning, afternoon, and/or
           evening.
@@ -239,15 +240,14 @@ export default function ProfileSettingsForm({
         className="mt-14 mb-14 space-y-3 rounded-lg border border-outline bg-primary-pale p-4"
         onChange={() => setDirty(true)}
       >
-        <label className="flex items-center gap-2 text-sm font-semibold text-text">
-          <input
-            type="checkbox"
-            name="is_public"
-            form="profile-form"
-            defaultChecked={initialValues.is_public}
-          />
-          Make my profile public
-        </label>
+        <h2 className="font-display text-lg font-bold text-text">Public Profile</h2>
+        <p className="text-xs text-text-muted">
+          If you make your profile public, anyone will be able to view it at a shareable URL:{" "}
+          <span className="font-semibold text-text">
+            {SITE_ORIGIN}/u/{initialValues.username}
+          </span>
+          .
+        </p>
         <p className="text-xs text-text-muted">
           Your avatar and display name are always shown when your profile is public. Choose what
           else to include:
@@ -261,11 +261,11 @@ export default function ProfileSettingsForm({
               rel="noopener noreferrer"
               className="font-semibold text-primary hover:underline"
             >
-              /u/{initialValues.username}
+              {SITE_ORIGIN}/u/{initialValues.username}
             </Link>
           </p>
         )}
-        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+        <label className="flex items-center gap-2 text-sm text-text">
           <input
             type="checkbox"
             name="bio_public"
@@ -274,7 +274,7 @@ export default function ProfileSettingsForm({
           />
           Show my Bio
         </label>
-        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+        <label className="flex items-center gap-2 text-sm text-text">
           <input
             type="checkbox"
             name="website_public"
@@ -283,7 +283,7 @@ export default function ProfileSettingsForm({
           />
           Show my Link
         </label>
-        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+        <label className="flex items-center gap-2 text-sm text-text">
           <input
             type="checkbox"
             name="favorites_public"
@@ -292,7 +292,7 @@ export default function ProfileSettingsForm({
           />
           Show my Favorites
         </label>
-        <label className="flex items-center gap-2 pl-6 text-sm text-text">
+        <label className="flex items-center gap-2 text-sm text-text">
           <input
             type="checkbox"
             name="routines_public"
@@ -300,6 +300,15 @@ export default function ProfileSettingsForm({
             defaultChecked={initialValues.routines_public}
           />
           Show my Routines
+        </label>
+        <label className="flex items-center gap-2 border-t border-outline pt-3 text-sm font-semibold text-text">
+          <input
+            type="checkbox"
+            name="is_public"
+            form="profile-form"
+            defaultChecked={initialValues.is_public}
+          />
+          Make my profile public
         </label>
       </div>
 

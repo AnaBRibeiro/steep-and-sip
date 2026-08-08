@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
+const SITE_ORIGIN = "https://steep-and-sip.vercel.app";
 
 /** Turns a name/email into a username suggestion. Deterministic per user so it stays stable across reloads. */
 function suggestUsername(seed: string, userId: string): string {
@@ -79,7 +80,8 @@ export default async function MyProfilePage() {
   return (
     <section className="mx-auto max-w-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
       <h1 className="font-display text-3xl font-bold text-text sm:text-4xl">My Profile</h1>
-      <p className="mt-3 text-text-muted">Edit how your profile appears.</p>
+      <p className="mt-3 text-text-muted">Edit your profile.</p>
+      <p className="mt-2 text-text-muted">At the end, you&apos;ll be able to choose to make it public.</p>
       {profile.is_public && profile.username && (
         <p className="mt-1 text-sm text-text-muted">
           Your public profile:{" "}
@@ -89,7 +91,7 @@ export default async function MyProfilePage() {
             rel="noopener noreferrer"
             className="font-semibold text-primary hover:underline"
           >
-            /u/{profile.username}
+            {SITE_ORIGIN}/u/{profile.username}
           </Link>
         </p>
       )}
