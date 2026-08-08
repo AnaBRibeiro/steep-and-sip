@@ -164,7 +164,7 @@ export default function AuthNav() {
       {menuOpen && (
         <div
           role="menu"
-          className="entrance absolute top-full right-0 mt-2 w-48 rounded-lg border border-outline bg-surface p-2 shadow-ambient"
+          className="entrance absolute top-full right-0 z-20 mt-2 w-48 rounded-lg border border-outline bg-surface p-2 shadow-ambient"
         >
           <p className="truncate px-3 py-2 text-xs text-text-muted">{displayName}</p>
           <Link
