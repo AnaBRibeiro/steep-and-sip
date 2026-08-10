@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
 import LegalPage, { LegalHeading, LegalParagraph, LegalList } from "@/components/LegalPage";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Terms of Use — Steep & Sip",
-  description: "The terms that govern your use of Steep & Sip.",
-};
+  description: "The terms and conditions that govern your use of the Steep & Sip website.",
+  path: "/terms-of-use",
+});
 
 export default function TermsOfUsePage() {
   return (
     <LegalPage title="Terms of Use" updated="August 2026">
+      <BreadcrumbJsonLd
+        items={[{ name: "Home", path: "/" }, { name: "Terms of Use", path: "/terms-of-use" }]}
+      />
       <LegalParagraph>
         Welcome to Steep &amp; Sip. By using this website, you agree to the terms below. If you
         don&apos;t agree with them, please don&apos;t use the site.

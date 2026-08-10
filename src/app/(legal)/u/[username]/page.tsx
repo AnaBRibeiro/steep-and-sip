@@ -1,3 +1,5 @@
+import { cache } from "react";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
@@ -6,6 +8,8 @@ import { getTeas, getTeasByIds } from "@/lib/teas";
 import { getRoutines } from "@/lib/routines.server";
 import FavoritesList from "@/components/FavoritesList";
 import RoutineList from "@/components/RoutineList";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -13,16 +17,39 @@ interface PublicProfilePageProps {
   params: Promise<{ username: string }>;
 }
 
-export default async function PublicProfilePage({ params }: PublicProfilePageProps) {
-  const { username } = await params;
+const PROFILE_COLUMNS =
+  "id, username, display_name, avatar_url, bio, bio_public, website, website_public, is_public, favorites_public, routines_public";
 
+const getPublicProfile = cache(async (username: string) => {
   const { data: profile } = await supabaseAdmin
     .from("profiles")
-    .select(
-      "id, username, display_name, avatar_url, bio, bio_public, website, website_public, is_public, favorites_public, routines_public"
-    )
+    .select(PROFILE_COLUMNS)
     .eq("username", username)
     .maybeSingle();
+
+  return profile;
+});
+
+export async function generateMetadata({ params }: PublicProfilePageProps): Promise<Metadata> {
+  const { username } = await params;
+  const profile = await getPublicProfile(username);
+
+  if (!profile || !profile.is_public) {
+    return { title: "Profile not found — Steep & Sip", robots: { index: false, follow: false } };
+  }
+
+  const name = profile.display_name || profile.username;
+
+  return buildPageMetadata({
+    title: `${name} — Steep & Sip`,
+    description: `${name}'s tea profile on Steep & Sip — see favorite teas and daily tea routines.`,
+    path: `/u/${profile.username}`,
+  });
+}
+
+export default async function PublicProfilePage({ params }: PublicProfilePageProps) {
+  const { username } = await params;
+  const profile = await getPublicProfile(username);
 
   if (!profile || !profile.is_public) notFound();
 
@@ -38,14 +65,22 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
     [routines, teas] = await Promise.all([getRoutines(profile.id), getTeas()]);
   }
 
+  const displayName = profile.display_name || profile.username;
+
   return (
     <section className="mx-auto max-w-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: `@${profile.username}`, path: `/u/${profile.username}` },
+        ]}
+      />
       <div className="flex items-center gap-4">
         {profile.avatar_url ? (
           // eslint-disable-next-line @next/next/no-img-element -- small avatar, not worth Next's image pipeline
           <img
             src={profile.avatar_url}
-            alt=""
+            alt={`${displayName}'s profile photo`}
             className="h-20 w-20 rounded-full border border-outline object-cover"
           />
         ) : (
@@ -54,9 +89,7 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
           </div>
         )}
         <div>
-          <h1 className="font-display text-2xl font-bold text-text sm:text-3xl">
-            {profile.display_name || profile.username}
-          </h1>
+          <h1 className="font-display text-2xl font-bold text-text sm:text-3xl">{displayName}</h1>
           <p className="text-sm text-text-muted">@{profile.username}</p>
         </div>
       </div>

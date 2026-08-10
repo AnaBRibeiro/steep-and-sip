@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import Newsletter from "@/components/Newsletter";
 import FavoriteButton from "@/components/FavoriteButton";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { getTeas } from "@/lib/teas";
 import { getFavoriteTeaIds } from "@/lib/favorites";
 import { getUser } from "@/lib/auth/dal";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Tea Library — Steep & Sip",
-  description: "Every tea Steep & Sip can recommend, with steep times and tasting notes.",
-};
+  description:
+    "Browse our full tea library — green, black, herbal, and more — with caffeine levels, steep times, and tasting notes.",
+  path: "/tea-library",
+});
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +30,7 @@ export default async function TeaLibraryPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Home", path: "/" }, { name: "Tea Library", path: "/tea-library" }]} />
       <ContentPage
         title="The Teas We Recommend"
         intro="Every tea that can show up in your quiz results, all in one place — with what to expect from each cup."

@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LegalPage, { LegalHeading, LegalParagraph, LegalList } from "@/components/LegalPage";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Cookie Policy — Steep & Sip",
-  description: "How Steep & Sip uses cookies.",
-};
+  description: "How Steep & Sip uses cookies and similar technologies on our website.",
+  path: "/cookie-policy",
+});
 
 export default function CookiePolicyPage() {
   return (
     <LegalPage title="Cookie Policy" updated="August 2026">
+      <BreadcrumbJsonLd
+        items={[{ name: "Home", path: "/" }, { name: "Cookie Policy", path: "/cookie-policy" }]}
+      />
       <LegalParagraph>
         This page explains how Steep &amp; Sip uses (and mostly doesn&apos;t use) cookies.
       </LegalParagraph>

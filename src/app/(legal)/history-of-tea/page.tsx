@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import { LegalHeading, LegalParagraph } from "@/components/LegalPage";
 import Newsletter from "@/components/Newsletter";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "History of Tea — Steep & Sip",
-  description: "A brief summary of how tea spread from ancient China to the rest of the world.",
-};
+  description:
+    "A brief history of tea — from its legendary discovery in ancient China to a daily ritual enjoyed around the world.",
+  path: "/history-of-tea",
+});
 
 export default function HistoryOfTeaPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[{ name: "Home", path: "/" }, { name: "History of Tea", path: "/history-of-tea" }]}
+      />
       <ContentPage
       title="A Brief History of Tea"
       intro="From a legendary accident in ancient China to a daily ritual for billions of people — here's the short version."

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import Newsletter from "@/components/Newsletter";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Pros & Cons of a Tea Routine — Steep & Sip",
   description: "The upsides of building a daily tea routine, and a few things worth keeping in mind.",
-};
+  path: "/tea-routine-pros-and-cons",
+});
 
 const pros = [
   "A built-in mindfulness break — a few quiet minutes to slow down and breathe.",
@@ -31,6 +34,12 @@ const cons = [
 export default function ProsAndConsPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Pros & Cons of a Tea Routine", path: "/tea-routine-pros-and-cons" },
+        ]}
+      />
       <ContentPage
         title="Pros & Cons of a Tea Routine"
         intro="Thinking about building tea into your daily rhythm? Here's an honest look at what tends to help, and what's worth keeping in mind."

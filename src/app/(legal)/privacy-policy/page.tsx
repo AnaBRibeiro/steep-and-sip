@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LegalPage, { LegalHeading, LegalParagraph, LegalList } from "@/components/LegalPage";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Privacy Policy — Steep & Sip",
-  description: "How Steep & Sip handles your information.",
-};
+  description: "How Steep & Sip collects, uses, and protects your information and account data.",
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
   return (
     <LegalPage title="Privacy Policy" updated="August 2026">
+      <BreadcrumbJsonLd
+        items={[{ name: "Home", path: "/" }, { name: "Privacy Policy", path: "/privacy-policy" }]}
+      />
       <LegalParagraph>
         Steep &amp; Sip is built to be simple and private by design. This page explains what data
         is involved when you use the site — whether you&apos;re just taking the quiz or you&apos;ve
