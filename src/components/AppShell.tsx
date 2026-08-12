@@ -37,6 +37,9 @@ export default function AppShell({ teas, loggedIn, favoriteTeaIds }: AppShellPro
   }
 
   function goHome() {
+    // Leaving the quiz (e.g. via the logo) abandons any in-progress answers — otherwise a
+    // later refresh of the homepage would incorrectly auto-resume the old quiz progress.
+    sessionStorage.removeItem(QUIZ_PROGRESS_STORAGE_KEY);
     navigate("landing");
   }
 
