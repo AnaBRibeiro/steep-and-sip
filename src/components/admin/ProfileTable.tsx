@@ -83,6 +83,7 @@ export default function ProfileTable({ profiles, currentAdminId, onUpdateRole }:
                         <img
                           src={profile.avatar_url}
                           alt=""
+                          loading="lazy"
                           className="h-7 w-7 shrink-0 rounded-full object-cover"
                         />
                       ) : (

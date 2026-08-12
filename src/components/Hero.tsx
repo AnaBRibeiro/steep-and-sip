@@ -56,13 +56,18 @@ export default function Hero({ onStart }: HeroProps) {
           </div>
 
           <div className="relative hidden overflow-hidden rounded-lg bg-surface-muted lg:block">
-            {/* eslint-disable-next-line @next/next/no-img-element -- serve the static file
-                directly, bypassing Next's on-the-fly AVIF/WebP optimizer entirely */}
-            <img
-              src="/images/tea-hero.webp"
-              alt="A steaming cup of tea resting on a stack of books"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
+            <picture>
+              <source media="(min-width: 1024px)" srcSet="/images/tea-hero.webp" />
+              {/* The <source> above gates the real fetch to desktop; this 1x1 data URI fallback
+                  never hits the network, so phones/tablets don't download an image the
+                  "lg:block" wrapper hides anyway. Next's lint rule already allows <img> here
+                  since it's inside a <picture>, its documented responsive-image escape hatch. */}
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+                alt="A steaming cup of tea resting on a stack of books"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </picture>
           </div>
         </div>
       </section>
