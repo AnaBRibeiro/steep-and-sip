@@ -93,9 +93,18 @@ export default function QuizFlow({ onComplete, onCancel }: QuizFlowProps) {
   }
 
   function handleBack() {
-    // Delegate to the browser so the in-app Back button and the browser's own Back
-    // button behave identically — both trigger the same popstate handling above.
-    window.history.back();
+    // Local state, not window.history.back(): a soft navigation elsewhere and back (e.g. the
+    // logo, which is a Next Link even though the URL doesn't change) can make Next's router
+    // silently rewrite history.state and drop our quizStep, leaving no real entry to land on
+    // for intermediate questions. The in-app button must work regardless of what's left in
+    // browser history — the popstate handler above is a best-effort layer on top of this, for
+    // when the browser's own Back/Forward buttons are used in an unbroken forward session.
+    if (stepIndex === 0) {
+      sessionStorage.removeItem(QUIZ_PROGRESS_STORAGE_KEY);
+      onCancel();
+    } else {
+      navigateStep(stepIndex - 1);
+    }
   }
 
   function handleStartOver() {

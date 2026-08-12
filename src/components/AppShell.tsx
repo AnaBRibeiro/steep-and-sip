@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import ClosingCta from "./ClosingCta";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -12,7 +12,7 @@ import SkipLink from "./SkipLink";
 import Testimonials from "./Testimonials";
 import { useFadeNavigate } from "@/lib/useFadeNavigate";
 import { QuizAnswers, Tea } from "@/lib/types";
-import { QUIZ_PROGRESS_STORAGE_KEY } from "@/lib/quiz";
+import { QUIZ_PROGRESS_STORAGE_KEY, QUIZ_VIEW_ACTIVE_KEY } from "@/lib/quiz";
 
 type View = "landing" | "quiz" | "results";
 
@@ -37,9 +37,6 @@ export default function AppShell({ teas, loggedIn, favoriteTeaIds }: AppShellPro
   }
 
   function goHome() {
-    // Leaving the quiz (e.g. via the logo) abandons any in-progress answers — otherwise a
-    // later refresh of the homepage would incorrectly auto-resume the old quiz progress.
-    sessionStorage.removeItem(QUIZ_PROGRESS_STORAGE_KEY);
     navigate("landing");
   }
 
@@ -60,11 +57,16 @@ export default function AppShell({ teas, loggedIn, favoriteTeaIds }: AppShellPro
 
     // Only auto-resume saved progress the first time AppShell mounts after an actual page
     // (re)load — not on every later soft navigation back to "/", like clicking the logo
-    // from another page, which should always land on the homepage.
+    // from another page, which should always land on the homepage. Progress alone isn't
+    // enough to auto-resume on: leaving the quiz (e.g. via the logo) keeps it around so a
+    // later "Take the Quiz" click can pick up where you left off, so we also require the
+    // quiz to have actually been the active view when the page was last left/reloaded.
     const isFirstMountThisPageLoad = !hasCheckedForSavedProgress;
     hasCheckedForSavedProgress = true;
     const hasStoredProgress =
-      isFirstMountThisPageLoad && sessionStorage.getItem(QUIZ_PROGRESS_STORAGE_KEY) !== null;
+      isFirstMountThisPageLoad &&
+      sessionStorage.getItem(QUIZ_PROGRESS_STORAGE_KEY) !== null &&
+      sessionStorage.getItem(QUIZ_VIEW_ACTIVE_KEY) === "1";
 
     if (hasOpenQuizParam || hasStoredProgress) {
       jumpTo("quiz");
@@ -76,6 +78,17 @@ export default function AppShell({ teas, loggedIn, favoriteTeaIds }: AppShellPro
     // Safe to reveal the homepage now — React has decided what view to actually show.
     document.documentElement.classList.remove("resume-quiz-pending");
   }, [jumpTo]);
+
+  // Mirrors the active view into sessionStorage so a later reload knows whether the quiz was
+  // actually on screen (see the resume check above) and so the pre-paint script in layout.tsx
+  // knows whether to hide the homepage while that decision is made.
+  useEffect(() => {
+    if (view === "quiz") {
+      sessionStorage.setItem(QUIZ_VIEW_ACTIVE_KEY, "1");
+    } else {
+      sessionStorage.removeItem(QUIZ_VIEW_ACTIVE_KEY);
+    }
+  }, [view]);
 
   return (
     <>

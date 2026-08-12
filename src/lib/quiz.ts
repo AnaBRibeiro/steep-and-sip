@@ -12,6 +12,11 @@ import {
 const CAFFEINE_ORDER: CaffeineLevel[] = ["none", "low", "medium", "high"];
 
 export const QUIZ_PROGRESS_STORAGE_KEY = "steep-sip-quiz-progress";
+// Tracks whether the quiz is the CURRENTLY active view, separate from whether progress
+// exists — so leaving the quiz (e.g. via the logo) can keep progress around to resume later,
+// without a reload of some other page (like the homepage) mistaking that leftover progress
+// for "the user was just on the quiz" and auto-resuming it.
+export const QUIZ_VIEW_ACTIVE_KEY = "steep-sip-quiz-view-active";
 
 export const questions: [
   QuizQuestion<Goal>,

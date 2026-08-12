@@ -30,7 +30,7 @@ const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');v
 // Hide the server-rendered homepage instantly if we're about to resume a saved quiz on
 // reload — avoids a flash of the homepage before React swaps in the quiz. The "resume-quiz-
 // pending" class is removed by AppShell once it's decided what to actually show.
-if(location.pathname==='/'&&sessionStorage.getItem('steep-sip-quiz-progress'))document.documentElement.classList.add('resume-quiz-pending');
+if(location.pathname==='/'&&sessionStorage.getItem('steep-sip-quiz-progress')&&sessionStorage.getItem('steep-sip-quiz-view-active')==='1')document.documentElement.classList.add('resume-quiz-pending');
 }catch(e){}})();`;
 
 export default function RootLayout({
