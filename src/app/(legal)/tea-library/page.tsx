@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContentPage from "@/components/ContentPage";
 import Newsletter from "@/components/Newsletter";
 import FavoriteButton from "@/components/FavoriteButton";
+import GuestFavoriteHint from "@/components/GuestFavoriteHint";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { getTeas } from "@/lib/teas";
 import { getFavoriteTeaIds } from "@/lib/favorites";
@@ -51,12 +52,14 @@ export default async function TeaLibraryPage() {
                   <span className="rounded-lg bg-primary-pale px-2.5 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
                     {CAFFEINE_LABELS[tea.caffeine]}
                   </span>
-                  {user && (
+                  {user ? (
                     <FavoriteButton
                       teaId={tea.id}
                       teaName={tea.name}
                       initialFavorited={favoriteTeaIds.has(tea.id)}
                     />
+                  ) : (
+                    <GuestFavoriteHint />
                   )}
                 </div>
               </div>

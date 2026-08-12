@@ -67,21 +67,9 @@ export default function TeaSearch({ onOpenChange }: TeaSearchProps) {
         type="button"
         onClick={open}
         aria-label="Search teas"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-text transition-colors hover:text-primary"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
       >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-5 w-5"
-          aria-hidden="true"
-        >
-          <circle cx="11" cy="11" r="7" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
+        <span className="emoji-tint-primary" aria-hidden="true">🔍</span>
       </button>
 
       {isOpen && (
@@ -99,19 +87,9 @@ export default function TeaSearch({ onOpenChange }: TeaSearchProps) {
             className="entrance w-full max-w-lg rounded-lg bg-surface p-6 shadow-ambient"
           >
             <div className="flex items-center gap-3">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5 shrink-0 text-text-muted"
-                aria-hidden="true"
-              >
-                <circle cx="11" cy="11" r="7" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
+              <span className="emoji-tint-primary shrink-0 text-lg text-text-muted" aria-hidden="true">
+                🔍
+              </span>
               <input
                 ref={inputRef}
                 type="text"

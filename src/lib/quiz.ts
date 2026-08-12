@@ -11,6 +11,8 @@ import {
 
 const CAFFEINE_ORDER: CaffeineLevel[] = ["none", "low", "medium", "high"];
 
+export const QUIZ_PROGRESS_STORAGE_KEY = "steep-sip-quiz-progress";
+
 export const questions: [
   QuizQuestion<Goal>,
   QuizQuestion<CaffeineLevel>,

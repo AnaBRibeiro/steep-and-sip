@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
-import Script from "next/script";
 import { buildPageMetadata, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
@@ -27,7 +26,12 @@ export const metadata: Metadata = {
   }),
 };
 
-const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`;
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');
+// Hide the server-rendered homepage instantly if we're about to resume a saved quiz on
+// reload — avoids a flash of the homepage before React swaps in the quiz. The "resume-quiz-
+// pending" class is removed by AppShell once it's decided what to actually show.
+if(location.pathname==='/'&&sessionStorage.getItem('steep-sip-quiz-progress'))document.documentElement.classList.add('resume-quiz-pending');
+}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -41,11 +45,11 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-bg text-text">
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
-        />
+        {/* Plain inline script, not next/script: beforeInteractive's execution is queued
+            behind Next's own async runtime chunk and does NOT block the browser's first
+            paint of the streamed SSR HTML, so it can't prevent a flash on its own. A native
+            <script> tag blocks parsing/paint until it runs, which is what this needs. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         {children}
       </body>
     </html>

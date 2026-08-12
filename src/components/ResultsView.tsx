@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { buildRoutine, ritualText, TIME_LABELS } from "@/lib/quiz";
 import { QuizAnswers, Tea } from "@/lib/types";
 import FavoriteButton from "./FavoriteButton";
+import GuestFavoriteHint from "./GuestFavoriteHint";
 
 interface ResultsViewProps {
   answers: QuizAnswers;
@@ -62,12 +63,14 @@ export default function ResultsView({
                   {primary.name}
                 </h2>
               </div>
-              {loggedIn && (
+              {loggedIn ? (
                 <FavoriteButton
                   teaId={primary.id}
                   teaName={primary.name}
                   initialFavorited={favoriteSet.has(primary.id)}
                 />
+              ) : (
+                <GuestFavoriteHint />
               )}
             </div>
             <p className="mt-3 text-text-muted">{primary.description}</p>
@@ -114,13 +117,15 @@ export default function ResultsView({
                   {TIME_LABELS[time]}
                   {isCurrent && " · You are here"}
                 </p>
-                {loggedIn && (
+                {loggedIn ? (
                   <FavoriteButton
                     teaId={tea.id}
                     teaName={tea.name}
                     initialFavorited={favoriteSet.has(tea.id)}
                     className="-mt-1 -mr-1"
                   />
+                ) : (
+                  <GuestFavoriteHint className="-mt-1 -mr-1" />
                 )}
               </div>
               <div className="mt-2 flex items-center gap-2">

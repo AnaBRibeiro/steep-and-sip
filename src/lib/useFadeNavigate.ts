@@ -28,5 +28,11 @@ export function useFadeNavigate<T>(initialValue: T) {
     }, fadeDuration());
   }, []);
 
-  return { value, visible, navigate } as const;
+  /** Sets the value immediately, with no fade — for correcting the initial view before first paint. */
+  const jumpTo = useCallback((next: T) => {
+    nextValue.current = next;
+    setValue(next);
+  }, []);
+
+  return { value, visible, navigate, jumpTo } as const;
 }

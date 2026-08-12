@@ -66,6 +66,12 @@ body {
     box-shadow 200ms ease;
 }
 
+/* Hides the server-rendered homepage instantly while we're about to resume a saved quiz on
+   reload, so it never gets painted before React swaps in the quiz. See THEME_INIT_SCRIPT. */
+.resume-quiz-pending #landing-view {
+  display: none;
+}
+
 /* Browsers don't give buttons/labels a pointer cursor by default like links get - normalize it. */
 button:not(:disabled),
 label[for],
@@ -102,6 +108,15 @@ label[for],
 /* Low-opacity, sage-tinted shadow for hover states, per the "soft diffusion" elevation rule. */
 @utility shadow-ambient {
   box-shadow: 0 10px 28px -10px rgba(74, 101, 79, 0.18);
+}
+
+/*
+ * Color emoji glyphs ignore `color`, so to pull a neutral-gray emoji (search, avatar) toward
+ * the brand's sage green, desaturate it back to gray, push it into sepia to give hue-rotate
+ * something to work with, then rotate onto the primary hue (~131deg) and restore saturation.
+ */
+@utility emoji-tint-primary {
+  filter: grayscale(1) sepia(1) hue-rotate(80deg) saturate(1.3) brightness(0.9);
 }
 
 .page-transition {

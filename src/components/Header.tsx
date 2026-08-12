@@ -58,7 +58,7 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
             <Link
               href={quizHref}
               onClick={onStartQuiz}
-              className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-on-primary transition-colors duration-200 hover:bg-primary-hover"
+              className="text-sm font-semibold text-text-muted transition-colors hover:text-primary"
             >
               {QUIZ_LABEL}
             </Link>
@@ -86,18 +86,9 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-text transition-colors hover:text-primary sm:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-md text-xl text-text transition-colors hover:text-primary sm:hidden"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              className="h-6 w-6"
-            >
-              {menuOpen ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-            </svg>
+            <span aria-hidden="true">{menuOpen ? "✕" : "☰"}</span>
           </button>
         </div>
       </div>

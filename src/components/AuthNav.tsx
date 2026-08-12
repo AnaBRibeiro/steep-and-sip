@@ -119,21 +119,9 @@ export default function AuthNav() {
         type="button"
         onClick={signIn}
         aria-label="Sign in with Google"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-text transition-colors hover:text-primary"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
       >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-5 w-5"
-          aria-hidden="true"
-        >
-          <circle cx="12" cy="8" r="4" />
-          <path d="M4 20c0-4 3.5-7 8-7s8 3 8 7" />
-        </svg>
+        <span className="emoji-tint-primary" aria-hidden="true">👤</span>
       </button>
     );
   }

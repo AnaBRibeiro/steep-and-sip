@@ -59,7 +59,7 @@ export default function FavoriteButton({
       </button>
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-9 left-1/2 z-10 -translate-x-1/2 rounded-md bg-text px-2 py-1 text-xs font-semibold whitespace-nowrap text-bg opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+        className="pointer-events-none absolute -top-9 left-1/2 z-10 -translate-x-1/2 rounded-md bg-text px-2 py-1 text-xs font-semibold whitespace-nowrap text-bg opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100"
       >
         {favorited ? "Remove from Favorites" : "Add to Favorites"}
       </span>
