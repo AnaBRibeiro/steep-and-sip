@@ -46,10 +46,14 @@ export default function ProfileSettingsForm({
   const [displayNameLength, setDisplayNameLength] = useState(initialValues.display_name?.length ?? 0);
   const [bioLength, setBioLength] = useState(initialValues.bio?.length ?? 0);
   const [dirty, setDirty] = useState(false);
-  const [lastSuccess, setLastSuccess] = useState(state.success);
+  // useActionState returns a new object every time the action resolves, even when `success`
+  // is `true` both times - comparing that object's identity (not state.success's value) is
+  // what actually detects "a save just completed," so "Saved!" shows on every save, not just
+  // the first one in a session.
+  const [lastState, setLastState] = useState(state);
 
-  if (state.success !== lastSuccess) {
-    setLastSuccess(state.success);
+  if (state !== lastState) {
+    setLastState(state);
     if (state.success) setDirty(false);
   }
 
@@ -246,7 +250,6 @@ export default function ProfileSettingsForm({
           <span className="font-semibold text-text">
             {SITE_ORIGIN}/u/{initialValues.username}
           </span>
-          .
         </p>
         <p className="text-xs text-text-muted">
           Your avatar and display name are always shown when your profile is public. Choose what
