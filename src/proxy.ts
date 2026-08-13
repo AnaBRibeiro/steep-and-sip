@@ -3,10 +3,15 @@ import { createServerClient } from "@supabase/ssr";
 import { PROTECTED_PREFIXES } from "@/lib/auth/protectedRoutes";
 
 /**
- * Runs on nearly every request to keep the Supabase session cookie fresh, and does a
- * lightweight "are you even signed in" check for protected routes. This is an optimistic
- * check only (no database query) - the real checks (admin role, etc.) happen close to the
- * data in each protected route's own layout/page, per Next.js's own guidance for Proxy-based auth.
+ * A lightweight "are you even signed in" check for protected routes, redirecting signed-out
+ * visitors before the page renders. This is an optimistic check only (no database query) - the
+ * real checks (admin role, etc.) happen close to the data in each protected route's own
+ * layout/page, per Next.js's own guidance for Proxy-based auth.
+ *
+ * Only runs on the protected prefixes themselves (see `matcher` below) - it doesn't need to run
+ * on every page just to keep the session cookie fresh, since the browser Supabase client
+ * (@supabase/ssr's createBrowserClient, used in AuthNav on every page) already auto-refreshes
+ * the session and syncs it to cookies on its own.
  */
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({
@@ -53,6 +58,9 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
+// Next.js requires matcher values to be literal constants (statically analyzed at build time,
+// per its own docs) - can't derive this from PROTECTED_PREFIXES at runtime. Keep these two in
+// sync with that array by hand.
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.svg|apple-icon.png).*)"],
+  matcher: ["/admin/:path*", "/myprofile/:path*"],
 };

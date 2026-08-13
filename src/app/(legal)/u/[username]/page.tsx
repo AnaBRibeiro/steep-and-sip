@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { getFavoriteTeaIds } from "@/lib/favorites";
-import { getTeas, getTeasByIds } from "@/lib/teas";
+import { getTeasByIds } from "@/lib/teas";
+import { getTeasCached } from "@/lib/teas.cache";
 import { getRoutines } from "@/lib/routines.server";
 import FavoritesList from "@/components/FavoritesList";
 import RoutineList from "@/components/RoutineList";
@@ -60,9 +61,9 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
   }
 
   let routines: Awaited<ReturnType<typeof getRoutines>> = [];
-  let teas: Awaited<ReturnType<typeof getTeas>> = [];
+  let teas: Awaited<ReturnType<typeof getTeasCached>> = [];
   if (profile.routines_public) {
-    [routines, teas] = await Promise.all([getRoutines(profile.id), getTeas()]);
+    [routines, teas] = await Promise.all([getRoutines(profile.id), getTeasCached()]);
   }
 
   const displayName = profile.display_name || profile.username;

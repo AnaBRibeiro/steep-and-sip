@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
@@ -25,6 +25,10 @@ function revalidateTeaPages() {
   revalidatePath("/admin/teas");
   revalidatePath("/tea-library");
   revalidatePath("/");
+  // updateTag (not revalidateTag): these actions are Server Actions editing the tea the admin
+  // is looking at right now, so the next request should see the fresh data immediately rather
+  // than briefly serving stale-while-revalidate.
+  updateTag("teas");
 }
 
 export async function createTea(formData: FormData) {

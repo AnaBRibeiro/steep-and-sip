@@ -4,7 +4,8 @@ import Link from "next/link";
 import { requireUser } from "@/lib/auth/dal";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { getFavoriteTeaIds } from "@/lib/favorites";
-import { getTeas, getTeasByIds } from "@/lib/teas";
+import { getTeasByIds } from "@/lib/teas";
+import { getTeasCached } from "@/lib/teas.cache";
 import { getRoutines } from "@/lib/routines.server";
 import ProfileSettingsForm from "@/components/ProfileSettingsForm";
 
@@ -75,7 +76,7 @@ export default async function MyProfilePage() {
 
   const favoriteTeaIds = await getFavoriteTeaIds(user.id);
   const favoriteTeas = await getTeasByIds([...favoriteTeaIds]);
-  const [teas, routines] = await Promise.all([getTeas(), getRoutines(user.id)]);
+  const [teas, routines] = await Promise.all([getTeasCached(), getRoutines(user.id)]);
 
   return (
     <section className="mx-auto max-w-xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">

@@ -4,7 +4,7 @@ import Newsletter from "@/components/Newsletter";
 import FavoriteButton from "@/components/FavoriteButton";
 import GuestFavoriteHint from "@/components/GuestFavoriteHint";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
-import { getTeas } from "@/lib/teas";
+import { getTeasCached } from "@/lib/teas.cache";
 import { getFavoriteTeaIds } from "@/lib/favorites";
 import { getUser } from "@/lib/auth/dal";
 import { buildPageMetadata } from "@/lib/seo";
@@ -26,7 +26,7 @@ const CAFFEINE_LABELS: Record<string, string> = {
 };
 
 export default async function TeaLibraryPage() {
-  const [teas, user] = await Promise.all([getTeas(), getUser()]);
+  const [teas, user] = await Promise.all([getTeasCached(), getUser()]);
   const favoriteTeaIds = user ? await getFavoriteTeaIds(user.id) : new Set<string>();
 
   return (
