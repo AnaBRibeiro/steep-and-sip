@@ -30,7 +30,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
     >
       <span className="dark:hidden" aria-hidden="true">
         🌙

@@ -26,7 +26,7 @@ export default function GuestFavoriteHint({ className }: GuestFavoriteHintProps)
         type="button"
         onClick={signIn}
         aria-label="Sign in with Google to save this tea to your favorites"
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-text-muted transition-all duration-200 hover:scale-110 hover:bg-tertiary/10 hover:text-tertiary"
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-text-muted transition-all duration-200 hover:scale-110 hover:bg-tertiary/10 hover:text-tertiary"
       >
         <svg
           viewBox="0 0 24 24"

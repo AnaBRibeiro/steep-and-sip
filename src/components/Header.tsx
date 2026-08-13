@@ -86,7 +86,7 @@ export default function Header({ onLogoClick, onStartQuiz }: HeaderProps) {
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-xl text-text transition-colors hover:text-primary sm:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-md text-xl text-text transition-colors hover:text-primary sm:hidden"
           >
             <span aria-hidden="true">{menuOpen ? "✕" : "☰"}</span>
           </button>

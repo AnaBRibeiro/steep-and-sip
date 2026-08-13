@@ -110,7 +110,7 @@ export default function AuthNav() {
   }
 
   if (!loaded) {
-    return <div className="h-9 w-9 shrink-0" aria-hidden="true" />;
+    return <div className="h-11 w-11 shrink-0" aria-hidden="true" />;
   }
 
   if (!user) {
@@ -119,7 +119,7 @@ export default function AuthNav() {
         type="button"
         onClick={signIn}
         aria-label="Sign in with Google"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
       >
         <span className="emoji-tint-primary" aria-hidden="true">👤</span>
       </button>
@@ -137,7 +137,7 @@ export default function AuthNav() {
         onClick={() => setMenuOpen((open) => !open)}
         aria-expanded={menuOpen}
         aria-label={`Account menu for ${displayName}`}
-        className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-outline transition-colors hover:border-primary/50"
+        className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-outline transition-colors hover:border-primary/50"
       >
         {avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element -- small external avatar, not worth Next's image pipeline
@@ -150,14 +150,14 @@ export default function AuthNav() {
       </button>
 
       {menuOpen && (
-        <div
-          role="menu"
-          className="entrance absolute top-full right-0 z-20 mt-2 w-48 rounded-lg border border-outline bg-surface p-2 shadow-ambient"
-        >
+        // Plain list of links/buttons, not role="menu" - that ARIA role implies the native
+        // menu keyboard pattern (arrow keys, Home/End, auto-focus on open), which this doesn't
+        // implement. Mislabeling it "menu" would tell screen readers to expect behavior that
+        // isn't there; standard Tab navigation over real links/buttons is more accessible here.
+        <div className="entrance absolute top-full right-0 z-20 mt-2 w-48 rounded-lg border border-outline bg-surface p-2 shadow-ambient">
           <p className="truncate px-3 py-2 text-xs text-text-muted">{displayName}</p>
           <Link
             href="/myprofile"
-            role="menuitem"
             onClick={() => setMenuOpen(false)}
             className="block rounded-md px-3 py-2 text-left text-sm font-semibold text-text transition-colors hover:bg-primary-pale hover:text-primary"
           >
@@ -166,7 +166,6 @@ export default function AuthNav() {
           {role === "admin" && (
             <Link
               href="/admin"
-              role="menuitem"
               onClick={() => setMenuOpen(false)}
               className="block rounded-md px-3 py-2 text-left text-sm font-semibold text-text transition-colors hover:bg-primary-pale hover:text-primary"
             >
@@ -175,7 +174,6 @@ export default function AuthNav() {
           )}
           <button
             type="button"
-            role="menuitem"
             onClick={signOut}
             className="block w-full rounded-md px-3 py-2 text-left text-sm font-semibold text-text transition-colors hover:bg-primary-pale hover:text-primary"
           >

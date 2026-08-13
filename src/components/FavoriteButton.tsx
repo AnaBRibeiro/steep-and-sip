@@ -40,7 +40,7 @@ export default function FavoriteButton({
         disabled={isPending}
         aria-pressed={favorited}
         aria-label={favorited ? `Remove ${teaName} from favorites` : `Add ${teaName} to favorites`}
-        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 hover:bg-tertiary/10 disabled:opacity-50 disabled:hover:scale-100 ${
+        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-all duration-200 hover:scale-110 hover:bg-tertiary/10 disabled:opacity-50 disabled:hover:scale-100 ${
           favorited ? "text-tertiary" : "text-text-muted hover:text-tertiary"
         }`}
       >

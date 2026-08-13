@@ -49,7 +49,10 @@ export default function Newsletter() {
         </p>
 
         {submitted ? (
-          <p className="entrance mt-8 rounded-lg bg-primary-pale px-6 py-4 text-sm font-semibold text-primary">
+          <p
+            role="status"
+            className="entrance mt-8 rounded-lg bg-primary-pale px-6 py-4 text-sm font-semibold text-primary"
+          >
             You&apos;re subscribed, {firstName}! Keep an eye on your inbox.
           </p>
         ) : (
@@ -93,7 +96,11 @@ export default function Newsletter() {
           </form>
         )}
 
-        {error && <p className="mt-3 text-sm font-semibold text-tertiary">{error}</p>}
+        {error && (
+          <p role="alert" className="mt-3 text-sm font-semibold text-tertiary">
+            {error}
+          </p>
+        )}
       </div>
     </section>
   );

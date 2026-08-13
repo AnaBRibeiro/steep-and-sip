@@ -26,6 +26,7 @@ export default function TeaSearch({ onOpenChange }: TeaSearchProps) {
   const [loadError, setLoadError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -39,7 +40,27 @@ export default function TeaSearch({ onOpenChange }: TeaSearchProps) {
     }
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      // Trap Tab within the dialog: aria-modal="true" claims only this content is
+      // interactive, so keyboard focus shouldn't be able to walk out into the page behind it.
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
@@ -67,7 +88,7 @@ export default function TeaSearch({ onOpenChange }: TeaSearchProps) {
         type="button"
         onClick={open}
         aria-label="Search teas"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-lg text-text transition-colors hover:text-primary"
       >
         <span className="emoji-tint-primary" aria-hidden="true">🔍</span>
       </button>
@@ -81,6 +102,7 @@ export default function TeaSearch({ onOpenChange }: TeaSearchProps) {
             className="absolute inset-0 -z-10 cursor-default"
           />
           <div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-label="Search teas"

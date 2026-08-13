@@ -15,7 +15,10 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <p className="entrance mt-8 rounded-lg bg-primary-pale px-6 py-4 text-sm font-semibold text-primary">
+      <p
+        role="status"
+        className="entrance mt-8 rounded-lg bg-primary-pale px-6 py-4 text-sm font-semibold text-primary"
+      >
         Thanks, {firstName}! Your message has been sent — we&apos;ll get back to you soon.
       </p>
     );

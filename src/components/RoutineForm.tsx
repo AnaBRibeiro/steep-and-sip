@@ -46,7 +46,7 @@ export default function RoutineForm({ teas, disabled, maxRoutines }: RoutineForm
       </div>
 
       {state.error && (
-        <p className="rounded-lg bg-primary-pale px-4 py-3 text-sm font-semibold text-tertiary">
+        <p role="alert" className="rounded-lg bg-primary-pale px-4 py-3 text-sm font-semibold text-tertiary">
           {state.error}
         </p>
       )}
