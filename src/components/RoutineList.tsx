@@ -21,7 +21,7 @@ const SLOTS: {
 
 function defaultRoutineName(routine: RoutineRow): string {
   const filledSlots = SLOTS.filter(({ key }) => routine[key]).map(({ label }) => label);
-  return `${filledSlots.join(" · ")} Routine`;
+  return filledSlots.join(" · ");
 }
 
 export default function RoutineList({
