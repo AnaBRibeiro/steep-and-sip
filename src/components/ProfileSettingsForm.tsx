@@ -255,19 +255,6 @@ export default function ProfileSettingsForm({
           Your avatar and display name are always shown when your profile is public. Choose what
           else to include:
         </p>
-        {initialValues.is_public && initialValues.username && (
-          <p className="text-xs text-text-muted">
-            Your public profile:{" "}
-            <Link
-              href={`/u/${initialValues.username}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-primary hover:underline"
-            >
-              {SITE_ORIGIN}/u/{initialValues.username}
-            </Link>
-          </p>
-        )}
         <label className="flex items-center gap-2 text-sm text-text">
           <input
             type="checkbox"
@@ -304,6 +291,23 @@ export default function ProfileSettingsForm({
           />
           Show my Routines
         </label>
+
+        {initialValues.is_public && initialValues.username && (
+          <div className="rounded-lg border border-outline bg-surface p-3 shadow-ambient">
+            <p className="text-sm text-text-muted">
+              Your public profile:{" "}
+              <Link
+                href={`/u/${initialValues.username}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline"
+              >
+                {SITE_ORIGIN}/u/{initialValues.username}
+              </Link>
+            </p>
+          </div>
+        )}
+
         <label className="flex items-center gap-2 border-t border-outline pt-3 text-sm font-semibold text-text">
           <input
             type="checkbox"
