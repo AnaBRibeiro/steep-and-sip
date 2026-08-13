@@ -28,10 +28,20 @@ export default function CookiePolicyPage() {
 
       <LegalHeading>Cookies we use</LegalHeading>
       <LegalParagraph>
-        Steep &amp; Sip doesn&apos;t use cookies for tracking, analytics, or advertising. If you
-        sign in with Google, we set a strictly necessary cookie to keep you signed in between
-        visits and to know which account you&apos;re acting as. This cookie is removed when you
-        sign out, and isn&apos;t used to track you across other sites.
+        Steep &amp; Sip doesn&apos;t use cookies for advertising. We use a privacy-focused
+        analytics tool to see overall traffic patterns, and it doesn&apos;t use cookies either —
+        see our{" "}
+        <Link
+          href="/privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline underline-offset-2"
+        >
+          Privacy Policy
+        </Link>{" "}
+        for details. If you sign in with Google, we set a strictly necessary cookie to keep you
+        signed in between visits and to know which account you&apos;re acting as. This cookie is
+        removed when you sign out, and isn&apos;t used to track you across other sites.
       </LegalParagraph>
       <LegalParagraph>
         It also uses your browser&apos;s local storage — a similar but separate technology from

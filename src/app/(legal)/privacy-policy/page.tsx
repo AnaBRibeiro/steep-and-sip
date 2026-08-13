@@ -99,6 +99,14 @@ export default function PrivacyPolicyPage() {
         we don&apos;t sell or share it with third parties.
       </LegalParagraph>
 
+      <LegalHeading>Analytics</LegalHeading>
+      <LegalParagraph>
+        We use a privacy-focused analytics tool to understand overall traffic to the site —
+        things like which pages are visited and roughly how many people visit. It doesn&apos;t
+        use cookies, doesn&apos;t track you across other websites, and doesn&apos;t collect or
+        store any information that identifies you personally.
+      </LegalParagraph>
+
       <LegalHeading>Cookies and sign-in sessions</LegalHeading>
       <LegalParagraph>
         Steep &amp; Sip doesn&apos;t use cookies for tracking or advertising. If you sign in, a

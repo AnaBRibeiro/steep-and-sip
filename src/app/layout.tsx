@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
+import Script from "next/script";
 import { buildPageMetadata, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
@@ -51,6 +52,13 @@ export default function RootLayout({
             <script> tag blocks parsing/paint until it runs, which is what this needs. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         {children}
+        {/* Umami analytics: pageview tracking, not needed before the page is usable, so the
+            default afterInteractive strategy (Next's recommended one for analytics) is fine. */}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="e6aebde7-5f3a-4c58-9d30-feb9e2a35bd5"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
